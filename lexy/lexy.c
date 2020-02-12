@@ -11,8 +11,8 @@ int main()
 {
 	char javaZero[] = "pgm1.javaz";
 	char *javCode = FileReader(javaZero);
-	char *javjack = classify(javCode);
-	printf("%s",javjack);
+	char *javClass = classify(javCode);
+	printf("%s",javClass);
 
 	return 0;
 }
