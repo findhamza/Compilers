@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -I. -lm
-OBJ = state.o
+OBJ = lexy.o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
