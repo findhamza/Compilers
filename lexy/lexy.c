@@ -43,22 +43,37 @@ char *FileReader(char *fileName)
 
 char *classify(char *jav)
 {
+	//FSM Component
 	enum state_codes cur_state = ENTRY_STATE;
 	enum ret_codes rc;
 	int (* state_fun)(char);
+	//End FSM Component
+
 	int atom_pt = 0;
-	char atom;
+	char atom = jav[0];
+	char token[32] = "";
 
 	for(;;){
 		atom = jav[atom_pt];
+
+		//FSM Component
 		state_fun = state[cur_state];
 		rc = state_fun(atom);
 		if(EXIT_STATE == cur_state)
 			break;
 		cur_state = lookup_transitions(cur_state, rc);
+		//End FSM Component
+
 		atom_pt++;
 		while(isspace(jav[atom_pt]))
 			atom_pt++;
+		append(token,atom);
+		if(tokenize==true)
+		{
+			printf("\n\nToken: %s\n\n", token);
+			token[0] = '\0';
+			tokenize = false;
+		}
 	}
 
 	return jav;
@@ -66,11 +81,16 @@ char *classify(char *jav)
 
 int entry_state(char a)
 {
-	printf("entered\n");
+	printf("entered: %c\n", a);
 	if(isalpha(a))
 		return alpha;
 	if(isdigit(a))
 		return num;
+	else if(a=='{')
+	{
+		tokenize=true;
+		return lb;
+	}
 	return end;
 }
 int letter_state(char a)
@@ -79,7 +99,7 @@ int letter_state(char a)
 		printf("letter: %c\n", a);
 		return alpha;
 	}
-	return end;
+	return entry;
 }
 int digit_state(char a)
 {
@@ -88,7 +108,15 @@ int digit_state(char a)
 		return num;
 	}
 	printf("num not caught\n");
-	return end;
+	return entry;
+}
+int symbol_state(char a)
+{
+	if(isalpha(a))
+		return alpha;
+	else if(isdigit(a))
+		return num;
+	return entry;
 }
 int exit_state(char a)
 {
@@ -104,3 +132,9 @@ enum state_codes lookup_transitions(enum state_codes cur_state, enum ret_codes r
 	return end;
 }
 
+void append(char* s, char c)
+{
+	int len = strlen(s);
+	s[len] = c;
+	s[len+1] = '\0';
+}
