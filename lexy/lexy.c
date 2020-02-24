@@ -65,8 +65,6 @@ char *classify(char *jav)
 		//End FSM Component
 
 		atom_pt++;
-		while(isspace(jav[atom_pt]))
-			atom_pt++;
 		append(token,atom);
 		if(tokenize==true)
 		{
@@ -79,26 +77,46 @@ char *classify(char *jav)
 	return jav;
 }
 
-int entry_state(char a)
+enum ret_codes assort(char a)
 {
-	printf("entered: %c\n", a);
 	if(isalpha(a))
 		return alpha;
-	if(isdigit(a))
+	else if(isdigit(a))
 		return num;
 	else if(a=='{')
-	{
-		tokenize=true;
 		return lb;
-	}
+	else if(a=='}')
+		return rb;
+	else if(a==',')
+		return comma;
+	else if(a==';')
+		return semicolon;
+	else if(a=='=')
+		return assign;
+	else if(a=='+')
+		return plus;
+	else if(a=='-')
+		return sub;
+	else if(a=='*')
+		return mul;
+	else if(a=='/')
+		return divi;
+	else if(isspace(a))
+		return space;
+
+	return end;
+}
+
+int entry_state(char a)
+{
+	tokenize = false;
+	return assort(a);
+
 	return end;
 }
 int letter_state(char a)
 {
-	if(isalpha(a)){
-		printf("letter: %c\n", a);
-		return alpha;
-	}
+	return assort(a);
 	return entry;
 }
 int digit_state(char a)
@@ -116,6 +134,11 @@ int symbol_state(char a)
 		return alpha;
 	else if(isdigit(a))
 		return num;
+	return entry;
+}
+int token_state(char a)
+{
+	tokenize = true;
 	return entry;
 }
 int exit_state(char a)

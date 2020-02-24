@@ -38,8 +38,6 @@ struct transition {
 };
 
 struct transition state_transition[] = {
-
-	//entry states
 	{entry,		alpha,		letter},
 	{entry, 	num,		digit},
 	{entry, 	lb,		symbol},
@@ -51,28 +49,12 @@ struct transition state_transition[] = {
 	{entry, 	sub,		symbol},
 	{entry, 	mul,		symbol},
 	{entry, 	divi,		symbol},
-	{entry,		space,		symbol},
-
-	//letter states
-	{letter,	alpha,		letter},
-	{letter,	num,		letter},
-	{letter, 	lb,		token},
-	{letter, 	rb,		token},
-	{letter, 	comma,		token},
-	{letter, 	semicolon,	token},
-	{letter, 	assign,		token},
-	{letter, 	plus,		token},
-	{letter, 	sub,		token},
-	{letter, 	mul,		token},
-	{letter, 	divi,		token},
-	{letter,	space,		token},
-
-	//digit states
+	{letter, 	alpha,		letter},
+	{letter, 	num,		digit},
 	{digit, 	num, 		digit},
-
-	//symbol states
+	{digit, 	alpha,		letter},
 	{symbol,	alpha,		letter},
-	{symbol,	num,		digit}};
+	{symbol, 	num,		digit}};
 
 #define EXIT_STATE end
 #define ENTRY_STATE entry
