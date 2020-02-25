@@ -45,6 +45,7 @@ char *classify(char *jav)
 {
 	//FSM Component
 	enum state_codes cur_state = ENTRY_STATE;
+	enum state_codes old_state = cur_state;
 	enum ret_codes rc;
 	int (* state_fun)(char);
 	//End FSM Component
@@ -56,22 +57,34 @@ char *classify(char *jav)
 	for(;;){
 		atom = jav[atom_pt];
 
+
 		//FSM Component
 		state_fun = state[cur_state];
 		rc = state_fun(atom);
 		if(EXIT_STATE == cur_state)
 			break;
+		old_state = cur_state;
 		cur_state = lookup_transitions(cur_state, rc);
 		//End FSM Component
 
-		atom_pt++;
-		append(token,atom);
-		if(tokenize==true)
+//		sleep(1);
+//		printf("\nAtom: %c ; O'State; %s ; Ret: %s ; State: %s",atom,get_state[old_state],get_ret[rc],get_state[cur_state]);
+
+//		if(strcmp(get_state[cur_state],"token")!=0)
+			atom_pt++;
+
+		if((tokenize==true || strcmp(get_state[cur_state],"token")==0) && strcmp(token,"")!=0)
 		{
 			printf("\n\nToken: %s\n\n", token);
 			token[0] = '\0';
 			tokenize = false;
 		}
+		if(tokenize==true)
+			tokenize=false;
+
+		if(!isspace(atom) && !iscntrl(atom))
+			append(token,atom);
+
 	}
 
 	return jav;
@@ -109,37 +122,24 @@ enum ret_codes assort(char a)
 
 int entry_state(char a)
 {
-	tokenize = false;
 	return assort(a);
-
-	return end;
 }
 int letter_state(char a)
 {
 	return assort(a);
-	return entry;
 }
 int digit_state(char a)
 {
-	if(isdigit(a)){
-		printf("digit: %c\n", a);
-		return num;
-	}
-	printf("num not caught\n");
-	return entry;
+	return assort(a);
 }
 int symbol_state(char a)
 {
-	if(isalpha(a))
-		return alpha;
-	else if(isdigit(a))
-		return num;
-	return entry;
+	return assort(a);
 }
 int token_state(char a)
 {
 	tokenize = true;
-	return entry;
+	return assort(a);
 }
 int exit_state(char a)
 {
