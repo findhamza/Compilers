@@ -56,7 +56,8 @@ char *classify(char *jav)
 
 	for(;;){
 		atom = jav[atom_pt];
-
+		if(atom=='\0')
+			break;
 
 		//FSM Component
 		state_fun = state[cur_state];
@@ -75,7 +76,7 @@ char *classify(char *jav)
 
 		if((tokenize==true || strcmp(get_state[cur_state],"token")==0) && strcmp(token,"")!=0)
 		{
-			printf("\n\nToken: %s\n\n", token);
+			printf("\nToken: %s\n", token);
 			token[0] = '\0';
 			tokenize = false;
 		}
