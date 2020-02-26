@@ -23,11 +23,9 @@ int token_state(char);
 int exit_state(char);
 
 void append(char*,char);
-void isKey(char*);
 
 //Global Arrays
-static char *keywords[] = {"class", "const", "var"};
-static char *label[] = {"<CLASS>", "<CONST>"};
+static char *keywords[] = {"class","const","var"};
 
 //Case Functions
 int (* state[])(char) = { entry_state, letter_state, digit_state, symbol_state, token_state, exit_state};
@@ -42,6 +40,7 @@ struct transition {
 	enum state_codes dst_state;
 };
 
+//Start State Table
 struct transition state_transition[] = {
 
 	//entry states
@@ -111,7 +110,7 @@ struct transition state_transition[] = {
 	{token, 	sub,		symbol},
 	{token, 	mul,		symbol},
 	{token, 	divi,		symbol},
-	{token,		space,		entry}};
+	{token,		space,		entry}};	//END State Table
 
 
 #define EXIT_STATE end

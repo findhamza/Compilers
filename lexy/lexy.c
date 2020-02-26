@@ -68,10 +68,10 @@ char *classify(char *jav)
 		cur_state = lookup_transitions(cur_state, rc);
 		//End FSM Component
 
-//		sleep(1);
-//		printf("\nAtom: %c ; O'State; %s ; Ret: %s ; State: %s",atom,get_state[old_state],get_ret[rc],get_state[cur_state]);
+//debug		sleep(1);
+//debug		printf("\nAtom: %c ; O'State; %s ; Ret: %s ; State: %s",atom,get_state[old_state],get_ret[rc],get_state[cur_state]);
 
-//		if(strcmp(get_state[cur_state],"token")!=0)
+//legacy	if(strcmp(get_state[cur_state],"token")!=0)
 			atom_pt++;
 
 		if((tokenize==true || strcmp(get_state[cur_state],"token")==0) && strcmp(token,"")!=0)
@@ -162,3 +162,5 @@ void append(char* s, char c)
 	s[len] = c;
 	s[len+1] = '\0';
 }
+
+
