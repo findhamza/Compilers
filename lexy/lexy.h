@@ -23,19 +23,20 @@ int token_state(char);
 int exit_state(char);
 
 void append(char*,char);
-void isKey(char*);
+int getLabel(char*);
 
 //Global Arrays
-static char *keywords[] = {"class", "const", "var"};
-static char *label[] = {"<CLASS>", "<CONST>"};
+static char *keywords[] = {"class", "const", "var", "{", "}", ",", ";", "=", "+", "-", "*", "/"};
+static char *label[] = {"~CLASS", "~CONST", "~VAR", ">lcb", ">rcb", ">comma", ">semicolon",
+			">assign", ">plus", ">minus", ">mul", ">divi", "$string", "$int", "?UNKOWN"};
 
 //Case Functions
 int (* state[])(char) = { entry_state, letter_state, digit_state, symbol_state, token_state, exit_state};
 enum state_codes { entry, letter, digit, symbol, token, end};
 const char* get_state[] = { "entry", "letter", "digit", "symbol", "token", "end"};
 
-enum ret_codes { alpha, num, lb, rb, comma, semicolon, assign, plus, sub, mul, divi, space};
-const char* get_ret[] = { "alpha", "num", "lb", "rb", "comma", "semicolon", "assign", "plus", "sub", "mul", "divi", "space"};
+enum ret_codes { alpha, num, lcb, rcb, comma, semicolon, assign, plus, sub, mul, divi, space};
+const char* get_ret[] = { "alpha", "num", "lcb", "rcb", "comma", "semicolon", "assign", "plus", "sub", "mul", "divi", "space"};
 struct transition {
 	enum state_codes src_state;
 	enum ret_codes ret_codes;
@@ -47,8 +48,8 @@ struct transition state_transition[] = {
 	//entry states
 	{entry,		alpha,		letter},
 	{entry, 	num,		digit},
-	{entry, 	lb,		symbol},
-	{entry, 	rb,		symbol},
+	{entry, 	lcb,		symbol},
+	{entry, 	rcb,		symbol},
 	{entry, 	comma,		symbol},
 	{entry, 	semicolon,	symbol},
 	{entry, 	assign,		symbol},
@@ -61,8 +62,8 @@ struct transition state_transition[] = {
 	//letter states
 	{letter,	alpha,		letter},
 	{letter,	num,		letter},
-	{letter, 	lb,		token},
-	{letter, 	rb,		token},
+	{letter, 	lcb,		token},
+	{letter, 	rcb,		token},
 	{letter, 	comma,		token},
 	{letter, 	semicolon,	token},
 	{letter, 	assign,		token},
@@ -74,8 +75,8 @@ struct transition state_transition[] = {
 
 	//digit states
 	{digit, 	num, 		digit},
-	{digit, 	lb,		token},
-	{digit, 	rb,		token},
+	{digit, 	lcb,		token},
+	{digit, 	rcb,		token},
 	{digit, 	comma,		token},
 	{digit, 	semicolon,	token},
 	{digit, 	assign,		token},
@@ -88,8 +89,8 @@ struct transition state_transition[] = {
 	//symbol states
 	{symbol,	alpha,		letter},
 	{symbol,	num,		digit},
-	{symbol, 	lb,		token},
-	{symbol, 	rb,		token},
+	{symbol, 	lcb,		token},
+	{symbol, 	rcb,		token},
 	{symbol, 	comma,		token},
 	{symbol, 	semicolon,	token},
 	{symbol, 	assign,		token},
@@ -102,8 +103,8 @@ struct transition state_transition[] = {
 	//token states
 	{token,		alpha,		letter},
 	{token,		num,		digit},
-	{token, 	lb,		entry},
-	{token, 	rb,		symbol},
+	{token, 	lcb,		entry},
+	{token, 	rcb,		symbol},
 	{token, 	comma,		symbol},
 	{token, 	semicolon,	symbol},
 	{token, 	assign,		symbol},

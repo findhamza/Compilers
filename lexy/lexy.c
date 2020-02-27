@@ -76,7 +76,8 @@ char *classify(char *jav)
 
 		if((tokenize==true || strcmp(get_state[cur_state],"token")==0) && strcmp(token,"")!=0)
 		{
-			printf("\nToken: %s\n", token);
+			int label_pos = getLabel(token);
+			printf("\nToken: %s\t%s\n", token, label[label_pos]);
 			token[0] = '\0';
 			tokenize = false;
 		}
@@ -98,9 +99,9 @@ enum ret_codes assort(char a)
 	else if(isdigit(a))
 		return num;
 	else if(a=='{')
-		return lb;
+		return lcb;
 	else if(a=='}')
-		return rb;
+		return rcb;
 	else if(a==',')
 		return comma;
 	else if(a==';')
@@ -164,3 +165,21 @@ void append(char* s, char c)
 }
 
 
+int getLabel(char* token)
+{
+	int arr_size = sizeof keywords / sizeof *(keywords + 0);
+	size_t i;
+
+	for(i=0; i<arr_size; i++)
+	{
+		if(strcasecmp(*(keywords +i),token)==0)
+			return i;
+	}
+
+	if(isalpha(token[0]))
+		return arr_size;
+	else if(isdigit(token[0]))
+		return arr_size+1;
+
+	return arr_size+2;
+}
