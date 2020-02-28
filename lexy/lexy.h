@@ -4,16 +4,20 @@
 
 
 //Include Sector
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include <string.h>
-#include <ctype.h>
+//Header Files
+#include "syslib.h"
+#include "struct.h"
 
+
+//
 //Function Init Sector
 char *FileReader(char *fileName);
 char *classify(char *jav);
+
+void append(char*,char);
+int getLabel(char*);
+
+//FSM Functions
 enum ret_codes assort(char);
 int entry_state(char);
 int letter_state(char);
@@ -21,20 +25,26 @@ int digit_state(char);
 int symbol_state(char);
 int token_state(char);
 int exit_state(char);
+//END FSM Functions
 
-void append(char*,char);
-int getLabel(char*);
 
+//
 //Global Arrays
+//The following two arrays need to be in sync for proper results
 static char *keywords[] = {"class", "const", "var", "{", "}", ",", ";", "=", "+", "-", "*", "/"};
 static char *label[] = {"~CLASS", "~CONST", "~VAR", ">lcb", ">rcb", ">comma", ">semicolon",
 			">assign", ">plus", ">minus", ">mul", ">divi", "$string", "$int", "?UNKOWN"};
+static char *segment[] = {"CS", "DS"};
 
-//Case Functions
+
+//
+//FSM Tokenizer Components
+//The following three arrays need to be in sync for proper results
 int (* state[])(char) = { entry_state, letter_state, digit_state, symbol_state, token_state, exit_state};
 enum state_codes { entry, letter, digit, symbol, token, end};
 const char* get_state[] = { "entry", "letter", "digit", "symbol", "token", "end"};
 
+//The following two arrays need to be in sync for proper results
 enum ret_codes { alpha, num, lcb, rcb, comma, semicolon, assign, plus, sub, mul, divi, space};
 const char* get_ret[] = { "alpha", "num", "lcb", "rcb", "comma", "semicolon", "assign", "plus", "sub", "mul", "divi", "space"};
 struct transition {
@@ -119,7 +129,9 @@ struct transition state_transition[] = {
 #define ENTRY_STATE entry
 
 enum state_codes lookup_transitions(enum state_codes, enum ret_codes);
+//END FSM Components
 
 
+//
 //Flags
 bool tokenize = false;

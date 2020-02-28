@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -I. -lm
-OBJ = lexy.o
+DEPS = lexy.h lisa.h
+OBJ = lexy.o lisa.o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)

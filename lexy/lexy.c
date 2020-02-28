@@ -50,9 +50,11 @@ char *classify(char *jav)
 	int (* state_fun)(char);
 	//End FSM Component
 
+	//Token Componenet
 	int atom_pt = 0;
 	char atom = jav[0];
 	char token[32] = "";
+	//End Component
 
 	for(;;){
 		atom = jav[atom_pt];
@@ -77,6 +79,7 @@ char *classify(char *jav)
 		if((tokenize==true || strcmp(get_state[cur_state],"token")==0) && strcmp(token,"")!=0)
 		{
 			int label_pos = getLabel(token);
+
 			printf("\nToken: %s\t%s\n", token, label[label_pos]);
 			token[0] = '\0';
 			tokenize = false;
