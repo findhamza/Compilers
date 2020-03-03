@@ -7,7 +7,7 @@
 //Header Files
 #include "syslib.h"
 #include "struct.h"
-
+#include "lisa.h"
 
 //
 //Function Init Sector

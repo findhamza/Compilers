@@ -54,7 +54,21 @@ char *classify(char *jav)
 	int atom_pt = 0;
 	char atom = jav[0];
 	char token[32] = "";
-	//End Component
+
+		//Token Storage Component
+		unsigned tokSize = sizeof(struct tokenClass);
+		struct Node *tokenNode = NULL;
+		struct tokenClass *tok = (struct tokenClass*)malloc(sizeof(struct tokenClass));
+	//End Token Component
+
+	//Symbol Table Component
+	unsigned symSize = sizeof(struct symbol);
+	struct Node *symbolNode = NULL;
+	struct symbol *sym = (struct symbol*)malloc(sizeof(struct symbol));
+
+		//Flags
+
+	//End Symbol Component
 
 	for(;;){
 		atom = jav[atom_pt];
@@ -80,7 +94,19 @@ char *classify(char *jav)
 		{
 			int label_pos = getLabel(token);
 
-			printf("\nToken: %s\t%s\n", token, label[label_pos]);
+			//Token Storage
+			strncpy(tok->lit, token, sizeof(tok->lit));
+			(*tok).label = label_pos;
+			push(&tokenNode, tok, tokSize);
+			//End Token Storage
+
+			//Symbol Storage
+			if(label[tok->label][0] != '>')
+			{
+			}
+			//End Symbol Storage
+
+			printf("\nToken: %s\t%s\n", tok->lit, label[tok->label]);
 			token[0] = '\0';
 			tokenize = false;
 		}
@@ -91,6 +117,8 @@ char *classify(char *jav)
 			append(token,atom);
 
 	}
+
+	printLisa(tokenNode, printToken);
 
 	return jav;
 }

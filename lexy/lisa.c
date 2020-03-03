@@ -26,8 +26,8 @@ void printLisa(struct Node *node, void (*fptr)(void*))
 void printSymbol(void *f)
 {
 	struct symbol* data = (struct symbol*)f;
-	struct tokenClass tokenData = (struct tokenClass*)data->token;
-	printf("%s\t%d\t%d\t%d\t%s\n", tokenData->lit, tokenData->label,
+//	struct tokenClass tokenData = data->token;
+	printf("%s\t%d\t%d\t%d\t%s\n", data->token->lit, data->token->label,
 		data->val, data->adrs, data->seg);
 }
 

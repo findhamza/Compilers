@@ -12,7 +12,7 @@ struct tokenClass {
 };
 
 struct symbol {
-	struct tokenClass token;
+	struct tokenClass *token;
         int val;
         int adrs;
         char seg[2];
