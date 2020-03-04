@@ -37,6 +37,12 @@ static char *label[] = {"~CLASS", "~CONST", "~VAR", ">lcb", ">rcb", ">comma", ">
 static char *segment[] = {"CS", "DS"};
 
 
+	//
+	//FSM Symbol Components
+	int (* symState[])(int) = { new_sym, key_sym, op_sym, alpha_sym, num_sym, error_sym, end_sym}
+	enum sym_codes { newsym
+
+
 //
 //FSM Tokenizer Components
 //The following three arrays need to be in sync for proper results

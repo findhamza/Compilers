@@ -118,6 +118,7 @@ char *classify(char *jav)
 
 	}
 
+	normalize(&tokenNode);
 	printLisa(tokenNode, printToken);
 
 	return jav;

@@ -36,3 +36,20 @@ void printToken(void *f)
 	struct tokenClass* data = (struct tokenClass*)f;
 	printf("%s\t%d\n", data->lit, data->label);
 }
+
+void normalize(struct Node** headRef)
+{
+	struct Node* prev = NULL;
+	struct Node* cur = *headRef;
+	struct Node* next = NULL;
+
+	while(cur != NULL)
+	{
+		next = cur->next;
+		cur->next = prev;
+		prev = cur;
+		cur = next;
+	}
+
+	*headRef = prev;
+}
