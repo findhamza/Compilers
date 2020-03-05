@@ -51,6 +51,7 @@ static char *segment[] = {"CS", "DS"};
 	//FSM Symbol Components
 	int (* symState[])(struct tokenClass*) = { new_sym, key_sym, op_sym, alpha_sym, num_sym, error_sym, end_sym};
 	enum sym_codes { newsym, keysym, opsym, alphasym, numsym, errorsym, endsym};
+	const char* get_symState[] = { "NewSym", "KeySym", "OpSym", "AlphaSym", "NumSym", "ErrorSym", "EndSym"};
 
 	//label_codes needs to lineup with global label string array
 	enum label_codes { sClass, sConst, sVar, sLcb, sRcb, sComma, sSemicolon, sAssgin,
@@ -80,18 +81,31 @@ static char *segment[] = {"CS", "DS"};
 		{newsym, 	sUnknown, 	endsym},
 
 		{keysym, 	sString,	alphasym},
+		{keysym, 	sComma,		opsym},
 
-		{opsym, 	sInt, 		newsym},
+		{opsym, 	sInt, 		numsym},
+		{opsym, 	sString,	alphasym},
 
 		{alphasym, 	sLcb,	 	newsym},
 		{alphasym, 	sRcb,	 	newsym},
 		{alphasym, 	sComma, 	keysym},
 		{alphasym, 	sSemicolon, 	newsym},
-		{alphasym, 	sAssgin, 	numsym},
+		{alphasym, 	sAssgin, 	opsym},
 		{alphasym, 	sPlus,		newsym},
 		{alphasym, 	sMinus, 	newsym},
 		{alphasym, 	sMul, 		newsym},
 		{alphasym, 	sDivi,	 	newsym},
+
+		{numsym, 	sInt, 		newsym},
+		{numsym, 	sLcb,	 	newsym},
+		{numsym, 	sRcb,	 	newsym},
+		{numsym, 	sComma, 	keysym},
+		{numsym, 	sSemicolon, 	newsym},
+		{numsym, 	sAssgin, 	numsym},
+		{numsym, 	sPlus,		newsym},
+		{numsym, 	sMinus, 	newsym},
+		{numsym, 	sMul, 		newsym},
+		{numsym, 	sDivi,	 	newsym},
 		};
 
 		enum sym_codes lookup_symTransitions(enum sym_codes, enum label_codes);

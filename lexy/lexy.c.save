@@ -221,20 +221,16 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 	int (* sym_fun)(struct tokenClass*);
 	//End FSM Component
 
-//		struct tokenClass* tokenInfo = (struct tokenClass*)malloc(sizeof(struct tokenClass));
-		struct tokenClass* tokenInfo = NULL;
+		struct tokenClass* tokenInfo = (struct tokenClass*)malloc(sizeof(struct tokenClass));
+		printf("HELP");
 
 	//Symbol Table Component
 	unsigned symSize = sizeof(struct symbol);
 	struct Node *symbolNode = NULL;
 	struct symbol *sym = (struct symbol*)malloc(sizeof(struct symbol));
-	bool symFlag = false;
-	char* symLit, symSeg;
-	int symLabel, symVal, symAdrs;
 
 	for(;;){
-		getTokenInfo(token->data, &tokenInfo);
-		printToken(tokenInfo);
+		tokenInfo = getTokenInfo(token);
 
 		//FSM Component
 		sym_fun = symState[cur_state];
@@ -244,38 +240,9 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 		old_state = cur_state;
 		cur_state = lookup_symTransitions(cur_state, lc);
 		//End FSM Component
-		printf("STATE::\tsrc:%s\tret:%s\tdst:%s\n\n", get_symState[old_state], label[lc], get_symState[cur_state]);
-/*
-		if(cur_state == keysym)
-		{
-			sym->token->label = lc;
-			if(lc!=0)
-				strncpy(sym->seg, segment[0], sizeof(segment[0]));
-			else
-				strncpy(sym->seg, segment[1], sizeof(segment[0]));
-		}
-		else if(cur_state == alphasym)
-			strncpy(sym->token->lit, tokenInfo->lit, sizeof(sym->token->lit));
-		else if(cur_state == numsym)
-			sym->val = atoi(tokenInfo->lit);
 
-		switch(lc) {
-			case sLcb:
-				symAdrs+=2;
-				push(&symbolNode, sym, symSize);
-			case sComma:
-				symAdrs+=2;
-				push(&symbolNode, sym, symSize);
-			case sSemicolon:
-				symAdrs+=2;
-				push(&symbolNode, sym, symSize);
-		}
-
-*/
-		if(token->next != NULL)
-			(token) = token->next;
-		else
-			break;
+		(token) = token->next;
+		printf("\n%s : %s", tokenInfo->lit, label[tokenInfo->label]);
 	}
 }
 

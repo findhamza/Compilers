@@ -39,8 +39,8 @@ void printToken(void *f)
 
 void getTokenInfo(void *f, struct tokenClass** tok)
 {
-	struct tokenClass* data = (struct tokenClass*)malloc(sizeof(struct tokenClass));
-	data = (struct tokenClass*)f;
+//	struct tokenClass* data = (struct tokenClass*)malloc(sizeof(struct tokenClass));
+	struct tokenClass* data = (struct tokenClass*)f;
 	(*tok) = data;
 }
 
