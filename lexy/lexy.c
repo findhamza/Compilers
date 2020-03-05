@@ -7,9 +7,11 @@ int main()
 {
 	char javaZero[] = "pgm1.javaz";
 	struct Node *tokenNode = NULL;
+	struct Node *symNode = NULL;
 
 	char *javCode = FileReader(javaZero);
 	tokenizer(javCode, &tokenNode);
+	symbolizer(tokenNode, &symNode);
 //	char *javClass = tokenizer(javCode);
 	printf("%s",javCode);
 
@@ -64,10 +66,6 @@ void tokenizer(char *jav, struct Node** tokenChain)
 		struct tokenClass *tok = (struct tokenClass*)malloc(sizeof(struct tokenClass));
 	//End Token Component
 
-	//Symbol Table Component
-	unsigned symSize = sizeof(struct symbol);
-	struct Node *symbolNode = NULL;
-	struct symbol *sym = (struct symbol*)malloc(sizeof(struct symbol));
 
 		//Flags
 
@@ -103,12 +101,6 @@ void tokenizer(char *jav, struct Node** tokenChain)
 			push(&tokenNode, tok, tokSize);
 			//End Token Storage
 
-			//Symbol Storage
-			if(label[tok->label][0] != '>')
-			{
-			}
-			//End Symbol Storage
-
 			printf("\nToken: %s\t%s\n", tok->lit, label[tok->label]);
 			token[0] = '\0';
 			tokenize = false;
@@ -125,7 +117,6 @@ void tokenizer(char *jav, struct Node** tokenChain)
 	printLisa(tokenNode, printToken);
 
 	(*tokenChain) = tokenNode;
-//	return jav;
 }
 
 enum ret_codes assort(char a)
@@ -221,6 +212,49 @@ int getLabel(char* token)
 }
 
 //Symbol Functions
+void symbolizer(struct Node* token, struct Node** symbolChain)
+{
+	//FSM Component
+	enum sym_codes cur_state = newsym;
+	enum sym_codes old_state = cur_state;
+	enum label_codes lc;
+	int (* sym_fun)(struct tokenClass*);
+	//End FSM Component
+
+		struct tokenClass* tokenInfo = (struct tokenClass*)malloc(sizeof(struct tokenClass));
+//		struct tokenClass* tokenInfo = NULL;
+
+	//Symbol Table Component
+	unsigned symSize = sizeof(struct symbol);
+	struct Node *symbolNode = NULL;
+	struct symbol *sym = (struct symbol*)malloc(sizeof(struct symbol));
+
+	for(;;){
+		getTokenInfo(token, &tokenInfo);
+
+		//FSM Component
+		sym_fun = symState[cur_state];
+		lc = sym_fun(tokenInfo);
+		if(endsym == cur_state)
+			break;
+		old_state = cur_state;
+		cur_state = lookup_symTransitions(cur_state, lc);
+		//End FSM Component
+
+		(token) = token->next;
+		printf("\n%s : %s\n", tokenInfo->lit, label[tokenInfo->label]);
+	}
+}
+
+enum sym_codes lookup_symTransitions(enum sym_codes cur_state, enum label_codes lc)
+{
+	int table_size = sizeof sym_state_transition / sizeof sym_state_transition[0];
+	for(int i=0; i<table_size; i++)
+		if(sym_state_transition[i].sym_src==cur_state && sym_state_transition[i].label_ret==lc)
+			return sym_state_transition[i].sym_dst;
+	return endsym;
+}
+
 int new_sym(struct tokenClass* token)
 {
 	return token->label;

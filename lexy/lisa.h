@@ -9,4 +9,5 @@ void printLisa(struct Node*, void(*)(void *));
 void printClass(void*);
 void printSymbol(void*);
 void printToken(void*);
+void getTokenInfo(void*, struct tokenClass**);
 void normalize(struct Node**);

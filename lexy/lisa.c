@@ -37,6 +37,13 @@ void printToken(void *f)
 	printf("%s\t%d\n", data->lit, data->label);
 }
 
+void getTokenInfo(void *f, struct tokenClass** tok)
+{
+	struct tokenClass* data = (struct tokenClass*)malloc(sizeof(struct tokenClass));
+	data = (struct tokenClass*)f;
+	(*tok) = data;
+}
+
 void normalize(struct Node** headRef)
 {
 	struct Node* prev = NULL;

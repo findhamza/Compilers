@@ -12,8 +12,8 @@
 //
 //Function Init Sector
 char *FileReader(char *fileName);
-//char *tokenizer(char *jav);
 void tokenizer(char *jav, struct Node**);
+void symbolizer(struct Node*, struct Node**);
 
 void append(char*,char);
 int getLabel(char*);
@@ -61,7 +61,42 @@ static char *segment[] = {"CS", "DS"};
 		enum sym_codes sym_dst;
 	};
 
-	struct symTransition sym_state_transition[] = {};
+	struct symTransition sym_state_transition[] = {
+
+		{newsym, 	sClass,		keysym},
+		{newsym, 	sConst, 	keysym},
+		{newsym, 	sVar, 		keysym},
+		{newsym, 	sLcb,	 	opsym},
+		{newsym, 	sRcb,	 	opsym},
+		{newsym, 	sComma, 	opsym},
+		{newsym, 	sSemicolon, 	opsym},
+		{newsym, 	sAssgin, 	opsym},
+		{newsym, 	sPlus,		opsym},
+		{newsym, 	sMinus, 	opsym},
+		{newsym, 	sMul, 		opsym},
+		{newsym, 	sDivi,	 	opsym},
+		{newsym, 	sString,	alphasym},
+		{newsym, 	sInt, 		numsym},
+		{newsym, 	sUnknown, 	endsym},
+
+		{keysym, 	sString,	alphasym},
+
+		{opsym, 	sInt, 		newsym},
+
+		{alphasym, 	sLcb,	 	newsym},
+		{alphasym, 	sRcb,	 	newsym},
+		{alphasym, 	sComma, 	keysym},
+		{alphasym, 	sSemicolon, 	newsym},
+		{alphasym, 	sAssgin, 	numsym},
+		{alphasym, 	sPlus,		newsym},
+		{alphasym, 	sMinus, 	newsym},
+		{alphasym, 	sMul, 		newsym},
+		{alphasym, 	sDivi,	 	newsym},
+		};
+
+		enum sym_codes lookup_symTransitions(enum sym_codes, enum label_codes);
+		//END FSM Components
+
 
 //
 //FSM Tokenizer Components
