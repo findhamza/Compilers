@@ -12,12 +12,13 @@
 //
 //Function Init Sector
 char *FileReader(char *fileName);
-char *classify(char *jav);
+//char *tokenizer(char *jav);
+void tokenizer(char *jav, struct Node**);
 
 void append(char*,char);
 int getLabel(char*);
 
-//FSM Functions
+//FSM Tokenizer Functions
 enum ret_codes assort(char);
 int entry_state(char);
 int letter_state(char);
@@ -25,8 +26,17 @@ int digit_state(char);
 int symbol_state(char);
 int token_state(char);
 int exit_state(char);
-//END FSM Functions
+//END FSM Tokenizer Functions
 
+//FSM Symbol Functions
+int new_sym(struct tokenClass*);
+int key_sym(struct tokenClass*);
+int op_sym(struct tokenClass*);
+int alpha_sym(struct tokenClass*);
+int num_sym(struct tokenClass*);
+int error_sym(struct tokenClass*);
+int end_sym(struct tokenClass*);
+//END FSM Symbol Functions
 
 //
 //Global Arrays
@@ -39,9 +49,19 @@ static char *segment[] = {"CS", "DS"};
 
 	//
 	//FSM Symbol Components
-	int (* symState[])(int) = { new_sym, key_sym, op_sym, alpha_sym, num_sym, error_sym, end_sym}
-	enum sym_codes { newsym
+	int (* symState[])(struct tokenClass*) = { new_sym, key_sym, op_sym, alpha_sym, num_sym, error_sym, end_sym};
+	enum sym_codes { newsym, keysym, opsym, alphasym, numsym, errorsym, endsym};
 
+	//label_codes needs to lineup with global label string array
+	enum label_codes { sClass, sConst, sVar, sLcb, sRcb, sComma, sSemicolon, sAssgin,
+				sPlus, sMinus, sMul, sDivi, sString, sInt, sUnknown};
+	struct symTransition {
+		enum sym_codes sym_src;
+		enum label_codes label_ret;
+		enum sym_codes sym_dst;
+	};
+
+	struct symTransition sym_state_transition[] = {};
 
 //
 //FSM Tokenizer Components

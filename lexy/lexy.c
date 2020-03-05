@@ -6,9 +6,12 @@
 int main()
 {
 	char javaZero[] = "pgm1.javaz";
+	struct Node *tokenNode = NULL;
+
 	char *javCode = FileReader(javaZero);
-	char *javClass = classify(javCode);
-	printf("%s",javClass);
+	tokenizer(javCode, &tokenNode);
+//	char *javClass = tokenizer(javCode);
+	printf("%s",javCode);
 
 	return 0;
 }
@@ -41,7 +44,7 @@ char *FileReader(char *fileName)
 	return buffer;
 }
 
-char *classify(char *jav)
+void tokenizer(char *jav, struct Node** tokenChain)
 {
 	//FSM Component
 	enum state_codes cur_state = ENTRY_STATE;
@@ -121,7 +124,8 @@ char *classify(char *jav)
 	normalize(&tokenNode);
 	printLisa(tokenNode, printToken);
 
-	return jav;
+	(*tokenChain) = tokenNode;
+//	return jav;
 }
 
 enum ret_codes assort(char a)
@@ -214,4 +218,40 @@ int getLabel(char* token)
 		return arr_size+1;
 
 	return arr_size+2;
+}
+
+//Symbol Functions
+int new_sym(struct tokenClass* token)
+{
+	return token->label;
+}
+
+int key_sym(struct tokenClass* token)
+{
+	return token->label;
+}
+
+int op_sym(struct tokenClass* token)
+{
+	return token->label;
+}
+
+int alpha_sym(struct tokenClass* token)
+{
+	return token->label;
+}
+
+int num_sym(struct tokenClass* token)
+{
+	return token->label;
+}
+
+int error_sym(struct tokenClass* token)
+{
+	return token->label;
+}
+
+int end_sym(struct tokenClass* token)
+{
+	return token->label;
 }
