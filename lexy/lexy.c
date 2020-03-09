@@ -10,7 +10,9 @@ int main()
 	struct Node *symNode = NULL;
 
 	char *javCode = FileReader(javaZero);
+		printf("\n\n");
 	tokenizer(javCode, &tokenNode);
+		printf("\n\n");
 	symbolizer(tokenNode, &symNode);
 //	char *javClass = tokenizer(javCode);
 	printf("%s",javCode);
@@ -218,7 +220,7 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 	enum sym_codes cur_state = newsym;
 	enum sym_codes old_state = cur_state;
 	enum label_codes lc;
-	int (* sym_fun)(struct tokenClass*);
+	int (* sym_fun)(struct tokenClass*, struct symbol**);
 	//End FSM Component
 
 //		struct tokenClass* tokenInfo = (struct tokenClass*)malloc(sizeof(struct tokenClass));
@@ -228,9 +230,11 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 	unsigned symSize = sizeof(struct symbol);
 	struct Node *symbolNode = NULL;
 	struct symbol *sym = (struct symbol*)malloc(sizeof(struct symbol));
-	bool symFlag = false;
-	char* symLit, symSeg;
-	int symLabel, symVal, symAdrs;
+	strncpy(sym->token->lit, "", sizeof(sym->token->lit));
+	sym->token->label = -1;
+	sym->val = 0;
+	sym->adrs = 0;
+	strncpy(sym->seg, "", sizeof(sym->seg));
 
 	for(;;){
 		getTokenInfo(token->data, &tokenInfo);
@@ -238,40 +242,14 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 
 		//FSM Component
 		sym_fun = symState[cur_state];
-		lc = sym_fun(tokenInfo);
+		lc = sym_fun(tokenInfo, &sym);
 		if(endsym == cur_state)
 			break;
 		old_state = cur_state;
 		cur_state = lookup_symTransitions(cur_state, lc);
 		//End FSM Component
 		printf("STATE::\tsrc:%s\tret:%s\tdst:%s\n\n", get_symState[old_state], label[lc], get_symState[cur_state]);
-/*
-		if(cur_state == keysym)
-		{
-			sym->token->label = lc;
-			if(lc!=0)
-				strncpy(sym->seg, segment[0], sizeof(segment[0]));
-			else
-				strncpy(sym->seg, segment[1], sizeof(segment[0]));
-		}
-		else if(cur_state == alphasym)
-			strncpy(sym->token->lit, tokenInfo->lit, sizeof(sym->token->lit));
-		else if(cur_state == numsym)
-			sym->val = atoi(tokenInfo->lit);
 
-		switch(lc) {
-			case sLcb:
-				symAdrs+=2;
-				push(&symbolNode, sym, symSize);
-			case sComma:
-				symAdrs+=2;
-				push(&symbolNode, sym, symSize);
-			case sSemicolon:
-				symAdrs+=2;
-				push(&symbolNode, sym, symSize);
-		}
-
-*/
 		if(token->next != NULL)
 			(token) = token->next;
 		else
@@ -288,37 +266,37 @@ enum sym_codes lookup_symTransitions(enum sym_codes cur_state, enum label_codes 
 	return endsym;
 }
 
-int new_sym(struct tokenClass* token)
+int new_sym(struct tokenClass* token, struct symbol** sym)
 {
 	return token->label;
 }
 
-int key_sym(struct tokenClass* token)
+int key_sym(struct tokenClass* token, struct symbol** sym)
 {
 	return token->label;
 }
 
-int op_sym(struct tokenClass* token)
+int op_sym(struct tokenClass* token, struct symbol** sym)
 {
 	return token->label;
 }
 
-int alpha_sym(struct tokenClass* token)
+int alpha_sym(struct tokenClass* token, struct symbol** sym)
 {
 	return token->label;
 }
 
-int num_sym(struct tokenClass* token)
+int num_sym(struct tokenClass* token, struct symbol** sym)
 {
 	return token->label;
 }
 
-int error_sym(struct tokenClass* token)
+int error_sym(struct tokenClass* token, struct symbol** sym)
 {
 	return token->label;
 }
 
-int end_sym(struct tokenClass* token)
+int end_sym(struct tokenClass* token, struct symbol** sym)
 {
 	return token->label;
 }
