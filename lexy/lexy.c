@@ -230,6 +230,7 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 	unsigned symSize = sizeof(struct symbol);
 	struct Node *symbolNode = NULL;
 	struct symbol *sym = (struct symbol*)malloc(sizeof(struct symbol));
+	sym->token = (struct tokenClass*)malloc(sizeof(struct tokenClass));
 	strncpy(sym->token->lit, "", sizeof(sym->token->lit));
 	sym->token->label = -1;
 	sym->val = 0;
@@ -268,11 +269,16 @@ enum sym_codes lookup_symTransitions(enum sym_codes cur_state, enum label_codes 
 
 int new_sym(struct tokenClass* token, struct symbol** sym)
 {
+	free((*sym)->token);
+	free(*sym);
+	(*sym) = (struct symbol*)malloc(sizeof(struct symbol));
+	(*sym)->token = (struct tokenClass*)malloc(sizeof(struct tokenClass));
 	return token->label;
 }
 
 int key_sym(struct tokenClass* token, struct symbol** sym)
 {
+	(*sym)->token->label = token->label;
 	return token->label;
 }
 
@@ -283,11 +289,13 @@ int op_sym(struct tokenClass* token, struct symbol** sym)
 
 int alpha_sym(struct tokenClass* token, struct symbol** sym)
 {
+	strncpy((*sym)->token->lit, token->lit, sizeof((*sym)->token->lit));
 	return token->label;
 }
 
 int num_sym(struct tokenClass* token, struct symbol** sym)
 {
+	(*sym)->val = atoi(token->lit);
 	return token->label;
 }
 
