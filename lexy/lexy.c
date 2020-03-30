@@ -239,7 +239,7 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 
 	for(;;){
 		getTokenInfo(token->data, &tokenInfo);
-		printToken(tokenInfo);
+//		printToken(tokenInfo);
 
 		//FSM Component
 		sym_fun = symState[cur_state];
@@ -269,33 +269,47 @@ enum sym_codes lookup_symTransitions(enum sym_codes cur_state, enum label_codes 
 
 int new_sym(struct tokenClass* token, struct symbol** sym)
 {
+//	printSymbol(*sym);
+
 	free((*sym)->token);
 	free(*sym);
 	(*sym) = (struct symbol*)malloc(sizeof(struct symbol));
 	(*sym)->token = (struct tokenClass*)malloc(sizeof(struct tokenClass));
+
+	if(label[token->label][0] == '~')
+		(*sym)->token->label = token->label;
+	if(strcasecmp(token->lit, keywords[0])==0)
+		strncpy((*sym)->seg ,segment[0] , sizeof((*sym)->seg));
+	else
+		strncpy((*sym)->seg ,segment[1] , sizeof((*sym)->seg));
+
+
 	return token->label;
 }
 
 int key_sym(struct tokenClass* token, struct symbol** sym)
 {
-	(*sym)->token->label = token->label;
+	printSymbol(*sym);
+
+	if(label[token->label][0] == '$')
+		strncpy((*sym)->token->lit, token->lit, sizeof(token->lit));
+
 	return token->label;
 }
 
 int op_sym(struct tokenClass* token, struct symbol** sym)
 {
+	(*sym)->val = atoi(token->lit);
 	return token->label;
 }
 
 int alpha_sym(struct tokenClass* token, struct symbol** sym)
 {
-	strncpy((*sym)->token->lit, token->lit, sizeof((*sym)->token->lit));
 	return token->label;
 }
 
 int num_sym(struct tokenClass* token, struct symbol** sym)
 {
-	(*sym)->val = atoi(token->lit);
 	return token->label;
 }
 
