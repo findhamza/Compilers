@@ -27,7 +27,7 @@ void printSymbol(void *f)
 {
 	struct symbol* data = (struct symbol*)f;
 //	struct tokenClass tokenData = data->token;
-	printf("lit: %s\tlab: %d\tval: %d\tadrs: %d\t%s\n", data->token->lit, data->token->label,
+	printf("lit: %s\t\tlab: %d\tval: %d\tadrs: %d\t%s\n", data->token->lit, data->token->label,
 		data->val, data->adrs, data->seg);
 }
 

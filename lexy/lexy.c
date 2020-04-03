@@ -249,7 +249,7 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 		old_state = cur_state;
 		cur_state = lookup_symTransitions(cur_state, lc);
 		//End FSM Component
-		printf("STATE::\tsrc:%s\tret:%s\tdst:%s\n\n", get_symState[old_state], label[lc], get_symState[cur_state]);
+//		printf("STATE::\tsrc:%s\tret:%s\tdst:%s\n\n", get_symState[old_state], label[lc], get_symState[cur_state]);
 
 		if(token->next != NULL)
 			(token) = token->next;
@@ -269,7 +269,8 @@ enum sym_codes lookup_symTransitions(enum sym_codes cur_state, enum label_codes 
 
 int new_sym(struct tokenClass* token, struct symbol** sym)
 {
-//	printSymbol(*sym);
+	if(strcmp((*sym)->token->lit, "\0")!=0)
+		printSymbol(*sym);
 
 	free((*sym)->token);
 	free(*sym);
@@ -289,7 +290,8 @@ int new_sym(struct tokenClass* token, struct symbol** sym)
 
 int key_sym(struct tokenClass* token, struct symbol** sym)
 {
-	printSymbol(*sym);
+	if(strcmp((*sym)->token->lit, "\0")!=0)
+		printSymbol(*sym);
 
 	if(label[token->label][0] == '$')
 		strncpy((*sym)->token->lit, token->lit, sizeof(token->lit));
@@ -300,11 +302,19 @@ int key_sym(struct tokenClass* token, struct symbol** sym)
 int op_sym(struct tokenClass* token, struct symbol** sym)
 {
 	(*sym)->val = atoi(token->lit);
+
+	if(strcmp((*sym)->token->lit, "\0")==0 && isdigit(token->lit[0]))
+	{
+		strncpy((*sym)->token->lit, "lit", sizeof((*sym)->token->lit));
+		strcat((*sym)->token->lit, token->lit);
+	}
+
 	return token->label;
 }
 
 int alpha_sym(struct tokenClass* token, struct symbol** sym)
 {
+	(*sym)->val = 0;
 	return token->label;
 }
 
