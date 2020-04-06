@@ -220,7 +220,7 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 	enum sym_codes cur_state = newsym;
 	enum sym_codes old_state = cur_state;
 	enum label_codes lc;
-	int (* sym_fun)(struct tokenClass*, struct symbol**);
+	int (* sym_fun)(struct tokenClass*, struct symbol**, struct Node**);
 	//End FSM Component
 
 //		struct tokenClass* tokenInfo = (struct tokenClass*)malloc(sizeof(struct tokenClass));
@@ -243,7 +243,7 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 
 		//FSM Component
 		sym_fun = symState[cur_state];
-		lc = sym_fun(tokenInfo, &sym);
+		lc = sym_fun(tokenInfo, &sym, &symbolNode);
 		if(endsym == cur_state)
 			break;
 		old_state = cur_state;
@@ -256,6 +256,15 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 		else
 			break;
 	}
+
+	normalize(&symbolNode);
+	while(symbolNode != NULL)
+	{
+		printSymbol(symbolNode->data);
+	}
+	//printLisa(symbolNode, printSymbol);
+
+
 }
 
 enum sym_codes lookup_symTransitions(enum sym_codes cur_state, enum label_codes lc)
@@ -267,10 +276,13 @@ enum sym_codes lookup_symTransitions(enum sym_codes cur_state, enum label_codes 
 	return endsym;
 }
 
-int new_sym(struct tokenClass* token, struct symbol** sym)
+int new_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
 	if(strcmp((*sym)->token->lit, "\0")!=0)
+	{
+		push(symNode, *sym, sizeof(struct symbol));
 		printSymbol(*sym);
+	}
 
 	free((*sym)->token);
 	free(*sym);
@@ -288,10 +300,13 @@ int new_sym(struct tokenClass* token, struct symbol** sym)
 	return token->label;
 }
 
-int key_sym(struct tokenClass* token, struct symbol** sym)
+int key_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
 	if(strcmp((*sym)->token->lit, "\0")!=0)
+	{
+		push(symNode, *sym, sizeof(struct symbol));
 		printSymbol(*sym);
+	}
 
 	if(label[token->label][0] == '$')
 		strncpy((*sym)->token->lit, token->lit, sizeof(token->lit));
@@ -299,7 +314,7 @@ int key_sym(struct tokenClass* token, struct symbol** sym)
 	return token->label;
 }
 
-int op_sym(struct tokenClass* token, struct symbol** sym)
+int op_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
 	(*sym)->val = atoi(token->lit);
 
@@ -312,23 +327,23 @@ int op_sym(struct tokenClass* token, struct symbol** sym)
 	return token->label;
 }
 
-int alpha_sym(struct tokenClass* token, struct symbol** sym)
+int alpha_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
 	(*sym)->val = 0;
 	return token->label;
 }
 
-int num_sym(struct tokenClass* token, struct symbol** sym)
+int num_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
 	return token->label;
 }
 
-int error_sym(struct tokenClass* token, struct symbol** sym)
+int error_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
 	return token->label;
 }
 
-int end_sym(struct tokenClass* token, struct symbol** sym)
+int end_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
 	return token->label;
 }

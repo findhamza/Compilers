@@ -29,13 +29,13 @@ int exit_state(char);
 //END FSM Tokenizer Functions
 
 //FSM Symbol Functions
-int new_sym(struct tokenClass*, struct symbol**);
-int key_sym(struct tokenClass*, struct symbol**);
-int op_sym(struct tokenClass*, struct symbol**);
-int alpha_sym(struct tokenClass*, struct symbol**);
-int num_sym(struct tokenClass*, struct symbol**);
-int error_sym(struct tokenClass*, struct symbol**);
-int end_sym(struct tokenClass*, struct symbol**);
+int new_sym(struct tokenClass*, struct symbol**, struct Node**);
+int key_sym(struct tokenClass*, struct symbol**, struct Node**);
+int op_sym(struct tokenClass*, struct symbol**, struct Node**);
+int alpha_sym(struct tokenClass*, struct symbol**, struct Node**);
+int num_sym(struct tokenClass*, struct symbol**, struct Node**);
+int error_sym(struct tokenClass*, struct symbol**, struct Node**);
+int end_sym(struct tokenClass*, struct symbol**, struct Node**);
 //END FSM Symbol Functions
 
 //
@@ -49,7 +49,7 @@ static char *segment[] = {"CS", "DS"};
 
 	//
 	//FSM Symbol Components
-	int (* symState[])(struct tokenClass*, struct symbol**) = { new_sym, key_sym, op_sym, alpha_sym, num_sym, error_sym, end_sym};
+	int (* symState[])(struct tokenClass*, struct symbol**, struct Node**) = { new_sym, key_sym, op_sym, alpha_sym, num_sym, error_sym, end_sym};
 	enum sym_codes { newsym, keysym, opsym, alphasym, numsym, errorsym, endsym};
 	const char* get_symState[] = { "NewSym", "KeySym", "OpSym", "AlphaSym", "NumSym", "ErrorSym", "EndSym"};
 
