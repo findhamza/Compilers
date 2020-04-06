@@ -257,12 +257,8 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 			break;
 	}
 
-	normalize(&symbolNode);
-	while(symbolNode != NULL)
-	{
-		printSymbol(symbolNode->data);
-	}
-	//printLisa(symbolNode, printSymbol);
+//	normalize(&symbolNode);
+//	printLisa(symbolNode, printSymbol);
 
 
 }
@@ -316,7 +312,9 @@ int key_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode
 
 int op_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
-	(*sym)->val = atoi(token->lit);
+	if(isdigit(token->lit[0]) && !isalpha(token->lit[0]))
+		(*sym)->val = atoi(token->lit);
+//	printf("\nop: %s\n", token->lit);
 
 	if(strcmp((*sym)->token->lit, "\0")==0 && isdigit(token->lit[0]))
 	{
@@ -329,6 +327,8 @@ int op_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 
 int alpha_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
+//	printf("\nalpha: %s\n", token->lit);
+
 	(*sym)->val = 0;
 	return token->label;
 }

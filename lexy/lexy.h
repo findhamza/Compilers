@@ -102,10 +102,10 @@ static char *segment[] = {"CS", "DS"};
 		{numsym, 	sComma, 	keysym},
 		{numsym, 	sSemicolon, 	newsym},
 		{numsym, 	sAssgin, 	opsym},
-		{numsym, 	sPlus,		opsym},
-		{numsym, 	sMinus, 	opsym},
-		{numsym, 	sMul, 		opsym},
-		{numsym, 	sDivi,	 	opsym},
+		{numsym, 	sPlus,		newsym},
+		{numsym, 	sMinus, 	newsym},
+		{numsym, 	sMul, 		newsym},
+		{numsym, 	sDivi,	 	newsym},
 		};
 
 		enum sym_codes lookup_symTransitions(enum sym_codes, enum label_codes);
