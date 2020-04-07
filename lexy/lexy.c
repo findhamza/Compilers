@@ -319,11 +319,37 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 
 	printf("\n\n");
 	normalize(&symbolNode);
+	adrsCounter(symbolNode);
 //	printLisa(symbolNode, printSymbol);
 
 	(*symbolChain) = symbolNode;
 }
 
+void adrsCounter(struct Node* sym)
+{
+	int cs = 0;
+	int ds = 0;
+
+	struct symbol* symDat = NULL;
+
+	while(sym != NULL)
+	{
+		getSymbolInfo(sym->data, &symDat);
+
+		if(strcmp(symDat->seg, "CS")==0)
+		{
+			symDat->adrs = cs;
+			cs++;
+		}
+		else
+		{
+			symDat->adrs = ds;
+			ds++;
+		}
+
+		sym = sym->next;
+	}
+}
 enum sym_codes lookup_symTransitions(enum sym_codes cur_state, enum label_codes lc)
 {
 	int table_size = sizeof sym_state_transition / sizeof sym_state_transition[0];

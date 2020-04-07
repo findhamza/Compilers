@@ -36,10 +36,10 @@ y	12
 <symbol>
 Pgm1	0	0	0	CS
 M	1	13	0	DS
-N	1	56	0	DS
-X	2	0	0	DS
-Y	2	0	0	DS
-Z	2	0	0	DS
-lit97	1	97	0	DS
-lit18	1	18	0	DS
+N	1	56	1	DS
+X	2	0	2	DS
+Y	2	0	3	DS
+Z	2	0	4	DS
+lit97	1	97	5	DS
+lit18	1	18	6	DS
 <end>
