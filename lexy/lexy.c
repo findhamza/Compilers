@@ -20,6 +20,8 @@ int main()
 	printLisa(symNode, printSymbol);
 	printf("%s",javCode);
 
+	FileWriter(javaZero, tokNode, symNode);
+
 	return 0;
 }
 
@@ -49,6 +51,61 @@ char *FileReader(char *fileName)
 	}
 
 	return buffer;
+}
+
+void FileWriter(char *inFile, struct Node* tok, struct Node* sym)
+{
+	char ext[] = ".javaz";
+	char *outFile = strstr(inFile, ext);
+
+	const char *var = "<var>";
+	const char *symbol = "<symbol>";
+	const char *end = "<end>";
+
+	struct tokenClass* tokDat = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+	struct symbol* symDat = (struct symbol*)calloc(1,sizeof(struct symbol));
+
+	if(outFile)
+	{
+		strcpy(outFile, ".lic");
+//debug		printf("\n1%s\n", inFile);
+	}
+	else
+	{
+		strcat(inFile, ".lic");
+//debug		printf("\n2%s\n", inFile);
+	}
+	outFile = (char*)calloc(1,sizeof(inFile));
+	strncpy(outFile, inFile, sizeof(inFile));
+
+	FILE *file = fopen(outFile, "w");
+	if(file == NULL)
+		printf("FILE WRITER CRASHED IN LEXY");
+
+//debug	printf("\nHELLO\n");
+	fprintf(file, "%s\n", var);
+	while(tok != NULL)
+	{
+		getTokenInfo(tok->data, &tokDat);
+//debug		printf("%s\t%d\n", tokDat->lit, tokDat->label);
+		fprintf(file, "%s\t%d\n", tokDat->lit, tokDat->label);
+		free(tok->data);
+		tok = tok->next;
+	}
+	fprintf(file, "%s\n", symbol);
+	while(sym != NULL)
+	{
+		getSymbolInfo(sym->data, &symDat);
+		fprintf(file, "%s\t%d\t%d\t%d\t%s\n", symDat->token->lit, symDat->token->label,
+			symDat->val, symDat->adrs, symDat->seg);
+		free(sym->data);
+		sym = sym->next;
+	}
+
+	fprintf(file, "%s\n", end);
+	fclose(file);
+	free(outFile);
+	free(tokDat); free(symDat);
 }
 
 void tokenizer(char *jav, struct Node** tokenChain)

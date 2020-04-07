@@ -12,6 +12,7 @@
 //
 //Function Init Sector
 char *FileReader(char *fileName);
+void FileWriter(char*, struct Node*, struct Node*);
 void tokenizer(char *jav, struct Node**);
 void symbolizer(struct Node*, struct Node**);
 

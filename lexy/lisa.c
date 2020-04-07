@@ -39,6 +39,12 @@ void printToken(void *f)
 	printf("%s\t%d\n", data->lit, data->label);
 }
 
+void getSymbolInfo(void*f, struct symbol** sym)
+{
+	struct symbol* data = (struct symbol*)f;
+	(*sym) = data;
+}
+
 void getTokenInfo(void *f, struct tokenClass** tok)
 {
 //	struct tokenClass* data = (struct tokenClass*)malloc(sizeof(struct tokenClass));
