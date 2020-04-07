@@ -282,7 +282,7 @@ int new_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode
 	{
 		unsigned symSize = sizeof(struct symbol);
 		push(symNode, *sym, symSize);
-//		printSymbol(*sym);
+		printSymbol(*sym);
 //		printf("\nLIST:\n");
 //		printLisa(*symNode, printSymbol);
 //		printf(":END LIST:\n\n");
@@ -290,12 +290,15 @@ int new_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode
 
 //	free((*sym)->token);
 //	free(*sym);
-	(*sym) = NULL;
+//	(*sym) = NULL;
 	(*sym) = (struct symbol*)calloc(1,sizeof(struct symbol));
 	(*sym)->token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 
 	if(label[token->label][0] == '~')
+	{
 		(*sym)->token->label = token->label;
+		printf("\n%s\n",label[token->label]);
+	}
 	if(strcasecmp(token->lit, keywords[0])==0)
 		strncpy((*sym)->seg ,segment[0] , sizeof((*sym)->seg));
 	else
@@ -310,7 +313,7 @@ int key_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode
 	if(strcmp((*sym)->token->lit, "\0")!=0)
 	{
 		push(symNode, *sym, sizeof(struct symbol));
-//		printSymbol(*sym);
+		printSymbol(*sym);
 //		printf("\nLIST:\n");
 //		printLisa(*symNode, printSymbol);
 //		printf(":END LIST:\n\n");
@@ -334,6 +337,7 @@ int op_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 	{
 		strncpy((*sym)->token->lit, "lit", sizeof((*sym)->token->lit));
 		strcat((*sym)->token->lit, token->lit);
+		(*sym)->token->label = sConst;
 	}
 
 	return token->label;
@@ -342,6 +346,12 @@ int op_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 int alpha_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
 	(*sym)->val = 0;
+
+	if(token->label == sAssgin)
+		(*sym)->token->label = sConst;
+	else if(token->label == sComma || token->label == sSemicolon)
+		(*sym)->token->label = sVar;
+
 	return token->label;
 }
 
