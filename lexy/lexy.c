@@ -258,7 +258,7 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 	}
 
 	printf("\n\n");
-//	normalize(&symbolNode);
+	normalize(&symbolNode);
 	printLisa(symbolNode, printSymbol);
 
 
@@ -279,17 +279,17 @@ int new_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode
 	{
 		unsigned symSize = sizeof(struct symbol);
 		push(symNode, *sym, symSize);
-		printSymbol(*sym);
-		printf("\nLIST:\n");
-		printLisa(*symNode, printSymbol);
-		printf(":END LIST:\n\n");
+//		printSymbol(*sym);
+//		printf("\nLIST:\n");
+//		printLisa(*symNode, printSymbol);
+//		printf(":END LIST:\n\n");
 	}
 
-	free((*sym)->token);
-	free(*sym);
+//	free((*sym)->token);
+//	free(*sym);
 	(*sym) = NULL;
-	(*sym) = (struct symbol*)malloc(sizeof(struct symbol));
-	(*sym)->token = (struct tokenClass*)malloc(sizeof(struct tokenClass));
+	(*sym) = (struct symbol*)calloc(1,sizeof(struct symbol));
+	(*sym)->token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 
 	if(label[token->label][0] == '~')
 		(*sym)->token->label = token->label;
@@ -307,14 +307,14 @@ int key_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode
 	if(strcmp((*sym)->token->lit, "\0")!=0)
 	{
 		push(symNode, *sym, sizeof(struct symbol));
-		printSymbol(*sym);
-		printf("\nLIST:\n");
-		printLisa(*symNode, printSymbol);
-		printf(":END LIST:\n\n");
+//		printSymbol(*sym);
+//		printf("\nLIST:\n");
+//		printLisa(*symNode, printSymbol);
+//		printf(":END LIST:\n\n");
 	}
 
-	free((*sym)->token);
-	(*sym)->token = (struct tokenClass*)malloc(sizeof(struct tokenClass));
+//	free((*sym)->token);
+	(*sym)->token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 
 	if(label[token->label][0] == '$')
 		strncpy((*sym)->token->lit, token->lit, sizeof(token->lit));
