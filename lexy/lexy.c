@@ -257,8 +257,9 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 			break;
 	}
 
+	printf("\n\n");
 //	normalize(&symbolNode);
-//	printLisa(symbolNode, printSymbol);
+	printLisa(symbolNode, printSymbol);
 
 
 }
@@ -276,12 +277,17 @@ int new_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode
 {
 	if(strcmp((*sym)->token->lit, "\0")!=0)
 	{
-		push(symNode, *sym, sizeof(struct symbol));
+		unsigned symSize = sizeof(struct symbol);
+		push(symNode, *sym, symSize);
 		printSymbol(*sym);
+		printf("\nLIST:\n");
+		printLisa(*symNode, printSymbol);
+		printf(":END LIST:\n\n");
 	}
 
 	free((*sym)->token);
 	free(*sym);
+	(*sym) = NULL;
 	(*sym) = (struct symbol*)malloc(sizeof(struct symbol));
 	(*sym)->token = (struct tokenClass*)malloc(sizeof(struct tokenClass));
 
@@ -302,7 +308,13 @@ int key_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode
 	{
 		push(symNode, *sym, sizeof(struct symbol));
 		printSymbol(*sym);
+		printf("\nLIST:\n");
+		printLisa(*symNode, printSymbol);
+		printf(":END LIST:\n\n");
 	}
+
+	free((*sym)->token);
+	(*sym)->token = (struct tokenClass*)malloc(sizeof(struct tokenClass));
 
 	if(label[token->label][0] == '$')
 		strncpy((*sym)->token->lit, token->lit, sizeof(token->lit));
@@ -314,7 +326,6 @@ int op_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
 	if(isdigit(token->lit[0]) && !isalpha(token->lit[0]))
 		(*sym)->val = atoi(token->lit);
-//	printf("\nop: %s\n", token->lit);
 
 	if(strcmp((*sym)->token->lit, "\0")==0 && isdigit(token->lit[0]))
 	{
@@ -327,8 +338,6 @@ int op_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 
 int alpha_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
-//	printf("\nalpha: %s\n", token->lit);
-
 	(*sym)->val = 0;
 	return token->label;
 }

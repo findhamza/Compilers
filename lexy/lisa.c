@@ -7,9 +7,10 @@ void push(struct Node** headRef, void *newData, size_t dataSize)
 	newNode->data = malloc(dataSize);
 	newNode->next = (*headRef);
 
-	size_t pos;
-	for(pos=0; pos<dataSize; pos++)
-		*(char*)(newNode->data + pos) = *(char*)(newData + pos);
+	memmove(newNode->data, newData, dataSize);
+//	size_t pos;
+//	for(pos=0; pos<dataSize; pos++)
+//		*(char*)(newNode->data + pos) = *(char*)(newData + pos);
 
 	(*headRef) = newNode;
 }
