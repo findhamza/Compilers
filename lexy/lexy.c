@@ -6,15 +6,18 @@
 int main()
 {
 	char javaZero[] = "pgm1.javaz";
-	struct Node *tokenNode = NULL;
+	struct Node *tokNode = NULL;
 	struct Node *symNode = NULL;
 
 	char *javCode = FileReader(javaZero);
 		printf("\n\n");
-	tokenizer(javCode, &tokenNode);
+	tokenizer(javCode, &tokNode);
 		printf("\n\n");
-	symbolizer(tokenNode, &symNode);
+	symbolizer(tokNode, &symNode);
 //	char *javClass = tokenizer(javCode);
+
+	printLisa(tokNode, printToken);
+	printLisa(symNode, printSymbol);
 	printf("%s",javCode);
 
 	return 0;
@@ -116,7 +119,7 @@ void tokenizer(char *jav, struct Node** tokenChain)
 	}
 
 	normalize(&tokenNode);
-	printLisa(tokenNode, printToken);
+//	printLisa(tokenNode, printToken);
 
 	(*tokenChain) = tokenNode;
 }
@@ -259,9 +262,9 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 
 	printf("\n\n");
 	normalize(&symbolNode);
-	printLisa(symbolNode, printSymbol);
+//	printLisa(symbolNode, printSymbol);
 
-
+	(*symbolChain) = symbolNode;
 }
 
 enum sym_codes lookup_symTransitions(enum sym_codes cur_state, enum label_codes lc)
