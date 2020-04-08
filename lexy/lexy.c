@@ -5,14 +5,15 @@
 
 int main()
 {
-	char javaZero[] = "pgm1.javaz";
+//	char javaZero[] = "pgm1.javaz";
+	char javaZero[] = "pe1.javaz";
 	struct Node *tokNode = NULL;
 	struct Node *symNode = NULL;
 
 	char *javCode = FileReader(javaZero);
-		printf("\n\n");
+	printf("\n\n");
 	tokenizer(javCode, &tokNode);
-		printf("\n\n");
+	printf("\n\n");
 	symbolizer(tokNode, &symNode);
 //	char *javClass = tokenizer(javCode);
 
@@ -27,6 +28,14 @@ int main()
 
 char *FileReader(char *fileName)
 {
+        char ext[] = ".javaz";
+        char *verify = strstr(fileName, ext);
+        if(!verify)
+        {
+                printf("INVALID JAVA ZERO FILE\nexit code(L0)\n");
+                exit(0);
+        }
+
 	char *buffer=NULL;
 	int strSize,readSize;
 	FILE *file = fopen(fileName,"r");
