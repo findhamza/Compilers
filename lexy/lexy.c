@@ -308,7 +308,7 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 
 	for(;;){
 		getTokenInfo(token->data, &tokenInfo);
-//		printToken(tokenInfo);
+		printToken(tokenInfo);
 
 		//FSM Component
 		sym_fun = symState[cur_state];
@@ -318,7 +318,7 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 		old_state = cur_state;
 		cur_state = lookup_symTransitions(cur_state, lc);
 		//End FSM Component
-//		printf("STATE::\tsrc:%s\tret:%s\tdst:%s\n\n", get_symState[old_state], label[lc], get_symState[cur_state]);
+		printf("STATE::\tsrc:%s\tret:%s\tdst:%s\n\n", get_symState[old_state], label[lc], get_symState[cur_state]);
 
 		if(token->next != NULL)
 			(token) = token->next;
@@ -389,7 +389,7 @@ int new_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode
 	if(label[token->label][0] == '~')
 	{
 		(*sym)->token->label = token->label;
-		printf("\n%s\n",label[token->label]);
+//Debug		printf("\n%s\n",label[token->label]);
 	}
 	if(strcasecmp(token->lit, keywords[0])==0)
 		strncpy((*sym)->seg ,segment[0] , sizeof((*sym)->seg));
@@ -417,6 +417,11 @@ int key_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode
 	if(label[token->label][0] == '$')
 		strncpy((*sym)->token->lit, token->lit, sizeof(token->lit));
 
+	return token->label;
+}
+
+int io_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
+{
 	return token->label;
 }
 

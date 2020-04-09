@@ -1,43 +1,43 @@
 <var>
 Class	0
-PgmEx1Nasm32Linux	12
-{	3
+PgmEx1Nasm32Linux	14
+{	5
 Const	1
-M	12
-=	7
-7	13
-,	5
-N	12
-=	7
-85	13
-;	6
+M	14
+=	9
+7	15
+,	7
+N	14
+=	9
+85	15
+;	8
 Var	2
-X	12
-,	5
-Y	12
-,	5
-Z	12
-;	6
-Read	12
-Y	12
-;	6
-Read	12
-Z	12
-;	6
-X	12
-=	7
-M	12
-+	8
-Y	12
-*	10
-Z	12
-+	8
-12	13
-;	6
-Write	12
-X	12
-;	6
-}	4
+X	14
+,	7
+Y	14
+,	7
+Z	14
+;	8
+Read	3
+Y	14
+;	8
+Read	3
+Z	14
+;	8
+X	14
+=	9
+M	14
++	10
+Y	14
+*	12
+Z	14
++	10
+12	15
+;	8
+Write	4
+X	14
+;	8
+}	6
 <symbol>
 PgmEx1Nasm32Linux	0	0	0	CS
 M	1	7	0	DS
@@ -45,4 +45,5 @@ N	1	85	1	DS
 X	2	0	2	DS
 Y	2	0	3	DS
 Z	2	0	4	DS
+lit12	1	12	5	DS
 <end>

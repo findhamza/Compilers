@@ -33,6 +33,7 @@ int exit_state(char);
 //FSM Symbol Functions
 int new_sym(struct tokenClass*, struct symbol**, struct Node**);
 int key_sym(struct tokenClass*, struct symbol**, struct Node**);
+int io_sym(struct tokenClass*, struct symbol**, struct Node**);
 int op_sym(struct tokenClass*, struct symbol**, struct Node**);
 int alpha_sym(struct tokenClass*, struct symbol**, struct Node**);
 int num_sym(struct tokenClass*, struct symbol**, struct Node**);
@@ -43,20 +44,20 @@ int end_sym(struct tokenClass*, struct symbol**, struct Node**);
 //
 //Global Arrays
 //The following two arrays need to be in sync for proper results
-static char *keywords[] = {"class", "const", "var", "{", "}", ",", ";", "=", "+", "-", "*", "/"};
-static char *label[] = {"~CLASS", "~CONST", "~VAR", ">lcb", ">rcb", ">comma", ">semicolon",
+static char *keywords[] = {"class", "const", "var", "read", "write", "{", "}", ",", ";", "=", "+", "-", "*", "/"};
+static char *label[] = {"~CLASS", "~CONST", "~VAR", "~READ", "~WRITE", ">lcb", ">rcb", ">comma", ">semicolon",
 			">assign", ">plus", ">minus", ">mul", ">divi", "$string", "$int", "?UNKOWN"};
 static char *segment[] = {"CS", "DS"};
 
 
 	//
 	//FSM Symbol Components
-	int (* symState[])(struct tokenClass*, struct symbol**, struct Node**) = { new_sym, key_sym, op_sym, alpha_sym, num_sym, error_sym, end_sym};
-	enum sym_codes { newsym, keysym, opsym, alphasym, numsym, errorsym, endsym};
-	const char* get_symState[] = { "NewSym", "KeySym", "OpSym", "AlphaSym", "NumSym", "ErrorSym", "EndSym"};
+	int (* symState[])(struct tokenClass*, struct symbol**, struct Node**) = { new_sym, key_sym, io_sym, op_sym, alpha_sym, num_sym, error_sym, end_sym};
+	enum sym_codes { newsym, keysym, iosym, opsym, alphasym, numsym, errorsym, endsym};
+	const char* get_symState[] = { "NewSym", "KeySym", "IoSym", "OpSym", "AlphaSym", "NumSym", "ErrorSym", "EndSym"};
 
 	//label_codes needs to lineup with global label string array
-	enum label_codes { sClass, sConst, sVar, sLcb, sRcb, sComma, sSemicolon, sAssgin,
+	enum label_codes { sClass, sConst, sVar, sRead, sWrite, sLcb, sRcb, sComma, sSemicolon, sAssgin,
 				sPlus, sMinus, sMul, sDivi, sString, sInt, sUnknown};
 	struct symTransition {
 		enum sym_codes sym_src;
@@ -69,6 +70,8 @@ static char *segment[] = {"CS", "DS"};
 		{newsym, 	sClass,		keysym},
 		{newsym, 	sConst, 	keysym},
 		{newsym, 	sVar, 		keysym},
+		{newsym,	sRead,		iosym},
+		{newsym,	sWrite,		iosym},
 		{newsym, 	sLcb,	 	opsym},
 		{newsym, 	sRcb,	 	opsym},
 		{newsym, 	sComma, 	opsym},
@@ -84,6 +87,8 @@ static char *segment[] = {"CS", "DS"};
 
 		{keysym, 	sString,	alphasym},
 		{keysym, 	sComma,		opsym},
+
+		{iosym,		sString,	alphasym},
 
 		{opsym, 	sInt, 		numsym},
 		{opsym, 	sString,	alphasym},
