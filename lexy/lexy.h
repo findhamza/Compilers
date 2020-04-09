@@ -8,6 +8,7 @@
 #include "syslib.h"
 #include "struct.h"
 #include "lisa.h"
+#include "glarr.h"
 
 //
 //Function Init Sector
@@ -42,13 +43,6 @@ int end_sym(struct tokenClass*, struct symbol**, struct Node**);
 //END FSM Symbol Functions
 
 //
-//Global Arrays
-//The following two arrays need to be in sync for proper results
-static char *keywords[] = {"class", "const", "var", "read", "write", "{", "}", ",", ";", "=", "+", "-", "*", "/"};
-static char *label[] = {"~CLASS", "~CONST", "~VAR", "~READ", "~WRITE", ">lcb", ">rcb", ">comma", ">semicolon",
-			">assign", ">plus", ">minus", ">mul", ">divi", "$string", "$int", "?UNKOWN"};
-static char *segment[] = {"CS", "DS"};
-
 
 	//
 	//FSM Symbol Components
@@ -56,9 +50,8 @@ static char *segment[] = {"CS", "DS"};
 	enum sym_codes { newsym, keysym, iosym, opsym, alphasym, numsym, errorsym, endsym};
 	const char* get_symState[] = { "NewSym", "KeySym", "IoSym", "OpSym", "AlphaSym", "NumSym", "ErrorSym", "EndSym"};
 
-	//label_codes needs to lineup with global label string array
-	enum label_codes { sClass, sConst, sVar, sRead, sWrite, sLcb, sRcb, sComma, sSemicolon, sAssgin,
-				sPlus, sMinus, sMul, sDivi, sString, sInt, sUnknown};
+	//label_codes enum lineup with global label string array in glarr.h
+
 	struct symTransition {
 		enum sym_codes sym_src;
 		enum label_codes label_ret;
