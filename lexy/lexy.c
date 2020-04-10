@@ -67,7 +67,7 @@ void FileWriter(char *inFile, struct Node* tok, struct Node* sym)
 	char ext[] = ".javaz";
 	char *outFile = strstr(inFile, ext);
 
-	const char *var = "<var>";
+	const char *var = "<token>";
 	const char *symbol = "<symbol>";
 	const char *end = "<end>";
 
