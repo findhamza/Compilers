@@ -5,6 +5,8 @@
 
 //Functions
 void push(struct Node**, void*, size_t);
+void *pop(struct Node**);
+bool is_empty(struct Node**);
 void printLisa(struct Node*, void(*)(void *));
 void printClass(void*);
 void printSymbol(void*);

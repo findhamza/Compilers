@@ -15,6 +15,26 @@ void push(struct Node** headRef, void *newData, size_t dataSize)
 	(*headRef) = newNode;
 }
 
+void *pop(struct Node** headRef)
+{
+	struct Node* tmp;
+	void* data;
+
+	if(is_empty(headRef))
+		return NULL;
+
+	tmp = *headRef;
+	data = (*headRef)->data;
+	*headRef = (*headRef)->next;
+	free(tmp);
+	return data;
+}
+
+bool is_empty(struct Node** headRef)
+{
+	return !headRef;
+}
+
 void printLisa(struct Node *node, void (*fptr)(void*))
 {
 	while(node != NULL)

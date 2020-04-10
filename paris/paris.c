@@ -77,7 +77,7 @@ void parser(char *lexCode)
 	{
 		strcpy(tok, lexTok);
 		lab = atoi(strtok(NULL, delimit));
-		printf("%s\t%d\n", tok, lab);
+//		printf("%s\t%d\n", tok, lab);
 
 		//FSM COMPONENT
 		prs_fun = prsState[cur_state];
@@ -103,39 +103,47 @@ enum prs_codes lookup_prsTransitions(enum prs_codes cur_state, enum label_codes 
 
 int new_prs(char *tok, int lab)
 {
+		printf("NEW:\t%s\t%d\n", tok, lab);
 	return lab;
 }
 
 int key_prs(char *tok, int lab)
 {
+		printf("KEY:\t%s\t%d\n", tok, lab);
 	return lab;
 }
 
 int io_prs(char *tok, int lab)
 {
+		printf("IO:\t%s\t%d\n", tok, lab);
 	return lab;
 }
 
 int op_prs(char *tok, int lab)
 {
+		printf("OP:\t%s\t%d\n", tok, lab);
 	return lab;
 }
 
 int alpha_prs(char *tok, int lab)
 {
+		printf("ALP:\t%s\t%d\n", tok, lab);
 	return lab;
 }
 int num_prs(char *tok, int lab)
 {
+		printf("NUM:\t%s\t%d\n", tok, lab);
 	return lab;
 }
 
 int error_prs(char *tok, int lab)
 {
+		printf("ERR:\t%s\t%d\n", tok, lab);
 	return lab;
 }
 
 int end_prs(char *tok, int lab)
 {
+		printf("END:\t%s\t%d\n", tok, lab);
 	return lab;
 }
