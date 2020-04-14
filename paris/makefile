@@ -1,7 +1,7 @@
 CC = gcc
-CFLAGS = -I. -lm
-DEPS = paris.h
-OBJ = paris.o
+CFLAGS = -I. -lm -g
+DEPS = paris.h missy.h ../lexy/syslib.h ../lexy/struct.h ../lexy/lisa.h ../lexy/glarr.h
+OBJ = paris.o missy.o ../lexy/lisa.o 
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)

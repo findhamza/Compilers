@@ -1,3 +1,5 @@
+#ifndef LISA_H
+#define LISA_H
 //Generic Linked List
 #include "syslib.h"
 #include "struct.h"
@@ -14,3 +16,5 @@ void printToken(void*);
 void getSymbolInfo(void*, struct symbol**);
 void getTokenInfo(void*, struct tokenClass**);
 void normalize(struct Node**);
+
+#endif

@@ -6,11 +6,39 @@
 
 int main()
 {
+	missy();
+
 	char lexFile[] = "pe1.lic";
 	char *lexCode = LexReader(lexFile);
 
 	parser(lexCode);
 }
+
+int missy()
+{
+        char equ[100];
+        struct Node *inFix = NULL;
+        struct Node *postFix = NULL;
+
+        printf("\nEnter equation: ");
+        scanf("%s", equ);
+
+	for(int i=0; i<sizeof(equ); i++)
+		push(&inFix, &equ[i], sizeof(char));
+
+	printf("Hello");
+
+        InToPost(inFix, &postFix);
+//
+//	while(postFix->next != NULL)
+//        {
+//                printf("%s", (char*)(postFix->data));
+//                postFix = postFix->next;
+//        }
+
+        return 0;
+}
+
 
 char *LexReader(char *fileName)
 {

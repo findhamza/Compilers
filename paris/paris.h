@@ -9,11 +9,15 @@
 #include "../lexy/struct.h"
 #include "../lexy/lisa.h"
 #include "../lexy/glarr.h"
+#include "missy.h"
 
 //
 //Function Init Sector
 char *LexReader(char *fileName);
 void parser(char *lexCode);
+
+//driver
+int missy();
 
 //FSM Parser Functions
 int new_prs(char*,int);
