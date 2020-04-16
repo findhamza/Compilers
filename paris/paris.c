@@ -77,7 +77,7 @@ void parser(char *lexCode)
 	//PDA STACK COMPONENTS
 	struct Node *pds = NULL;
 	struct Node *quadNode = NULL;
-	struct Quads *quad = (struct Quads*)malloc(sizeof(struct Quads));
+	struct Quads *quad = (struct Quads*)calloc(1,sizeof(struct Quads));
 	quad->op = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 	quad->polyOne = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 	quad->polyTwo = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
@@ -101,6 +101,8 @@ void parser(char *lexCode)
 
 		lexTok = strtok(NULL, delimit);
 	}
+
+	printLisa(quadNode, printQuad);
 }
 
 enum prs_codes lookup_prsTransitions(enum prs_codes cur_state, enum label_codes lc)
@@ -130,6 +132,14 @@ int new_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct N
 int key_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("KEY:\t%s\t%d\n", tok, lab);
+	return lab;
+}
+
+int io_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
+{
+		printf("IO:\t%s\t%d\n", tok, lab);
+
+	(*quad)->result = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 
 	if((*quad)->op->label == sRead || (*quad)->op->label == sWrite)
 	{
@@ -138,12 +148,6 @@ int key_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct N
 		push(quadNode, *quad, sizeof(struct Quads));
 	}
 
-	return lab;
-}
-
-int io_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
-{
-		printf("IO:\t%s\t%d\n", tok, lab);
 	return lab;
 }
 
