@@ -9,7 +9,7 @@
 #include "../lexy/struct.h"
 #include "../lexy/lisa.h"
 #include "../lexy/glarr.h"
-#include "missy.h"
+//#include "missy.h"
 
 //
 //Function Init Sector
@@ -17,22 +17,22 @@ char *LexReader(char *fileName);
 void parser(char *lexCode);
 
 //driver
-int missy();
+//int missy();
 
 //FSM Parser Functions
-int new_prs(char*,int);
-int key_prs(char*,int);
-int io_prs(char*,int);
-int op_prs(char*,int);
-int alpha_prs(char*,int);
-int num_prs(char*,int);
-int error_prs(char*,int);
-int end_prs(char*,int);
+int new_prs(char*,int,struct Quads**,struct Node**,struct Node**);
+int key_prs(char*,int,struct Quads**,struct Node**,struct Node**);
+int io_prs(char*,int,struct Quads**,struct Node**,struct Node**);
+int op_prs(char*,int,struct Quads**,struct Node**,struct Node**);
+int alpha_prs(char*,int,struct Quads**,struct Node**,struct Node**);
+int num_prs(char*,int,struct Quads**,struct Node**,struct Node**);
+int error_prs(char*,int,struct Quads**,struct Node**,struct Node**);
+int end_prs(char*,int,struct Quads**,struct Node**,struct Node**);
 //END FSM Parser Functions
 
 //
 //FSM Parser Components
-int (* prsState[])(char*, int) = { new_prs, key_prs, io_prs, op_prs, alpha_prs, num_prs, error_prs, end_prs};
+int (* prsState[])(char*, int, struct Quads**, struct Node**, struct Node**) = { new_prs, key_prs, io_prs, op_prs, alpha_prs, num_prs, error_prs, end_prs};
 enum prs_codes { newprs, keyprs, ioprs, opprs, alphaprs, numprs, errorprs, endprs};
 const char* get_prsState[] = { "NewPrs", "KeyPrs", "IoPrs", "OpPrs", "AlphaPrs", "NumPrs", "ErrorPrs", "EndPrs"};
 

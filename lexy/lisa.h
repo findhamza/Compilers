@@ -7,7 +7,7 @@
 
 //Functions
 void push(struct Node**, void*, size_t);
-void *pop(struct Node**);
+void *pop(struct Node**,size_t);
 bool is_empty(struct Node**);
 void printLisa(struct Node*, void(*)(void *));
 void printClass(void*);

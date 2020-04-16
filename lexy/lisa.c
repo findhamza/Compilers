@@ -15,16 +15,16 @@ void push(struct Node** headRef, void *newData, size_t dataSize)
 	(*headRef) = newNode;
 }
 
-void *pop(struct Node** headRef)
+void *pop(struct Node** headRef, size_t dataSize)
 {
 	struct Node* tmp;
-	void* data;
+	void* data = calloc(1, sizeof(dataSize));
 
 	if(is_empty(headRef))
 		return NULL;
 
 	tmp = *headRef;
-	data = (*headRef)->data;
+//	data = (*headRef)->data;
 	*headRef = (*headRef)->next;
 	free(tmp);
 	return data;

@@ -18,4 +18,10 @@ struct symbol {
         char seg[2];
 };
 
+struct Quads {
+	struct tokenClass *op;
+	struct tokenClass *polyOne;
+	struct tokenClass *polyTwo;
+	struct tokenClass *result;
+};
 #endif

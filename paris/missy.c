@@ -4,6 +4,7 @@ void InToPost(struct Node* inFix, struct Node** outFix)
 {
 	struct Node *temp = NULL;
 	char *x = NULL, *token = NULL;
+	size_t cSize = sizeof(char*);
 	int i, j=0;
 
 	printf("HELLO");
@@ -19,16 +20,15 @@ void InToPost(struct Node* inFix, struct Node** outFix)
 				push(&temp, &token[0], sizeof(char*));
 		else
 			if(token[0]==')')
-				while((x=(char*)pop(&temp))[0]!='(')
+				while((x=(char*)pop(&temp,cSize))[0]!='(')
 					push(outFix, &x[0], sizeof(char*));
 				else
 				{
-					char* t = (char*)malloc(sizeof(temp->data));
-					//t = (char*)(temp->data);
-					memmove(t, temp->data, sizeof(t));
-					while(precy(token[0]) <= precy(t[0]) && !is_empty(&temp))
+					char* t = NULL;
+					t = (char **)&(temp->data);
+					while(precy(token[0]) <= precy(&t[0]) && !is_empty(&temp))
 					{
-						x = pop(&temp);
+						x = (pop(&temp,cSize));
 						push(&temp, &token[0], sizeof(char*));
 						t = temp->data;
 					}
@@ -37,7 +37,7 @@ void InToPost(struct Node* inFix, struct Node** outFix)
 
 	while(!is_empty(&temp))
 	{
-		push(outFix, pop(&temp), sizeof(char*));
+		push(outFix, pop(&temp,cSize), sizeof(char*));
 	}
 }
 

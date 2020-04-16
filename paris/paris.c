@@ -6,39 +6,11 @@
 
 int main()
 {
-	missy();
-
 	char lexFile[] = "pe1.lic";
 	char *lexCode = LexReader(lexFile);
 
 	parser(lexCode);
 }
-
-int missy()
-{
-        char equ[100];
-        struct Node *inFix = NULL;
-        struct Node *postFix = NULL;
-
-        printf("\nEnter equation: ");
-        scanf("%s", equ);
-
-	for(int i=0; i<sizeof(equ); i++)
-		push(&inFix, &equ[i], sizeof(char));
-
-	printf("Hello");
-
-        InToPost(inFix, &postFix);
-//
-//	while(postFix->next != NULL)
-//        {
-//                printf("%s", (char*)(postFix->data));
-//                postFix = postFix->next;
-//        }
-
-        return 0;
-}
-
 
 char *LexReader(char *fileName)
 {
@@ -82,7 +54,8 @@ void parser(char *lexCode)
 	enum prs_codes cur_state = newprs;
 	enum prs_codes old_state = cur_state;
 	enum label_codes lc;
-	int (* prs_fun)(char* tok, int lab);
+	int (* prs_fun)(char* tok, int lab, struct Quads** quad,
+			struct Node** pds, struct Node** quadNode);
 	//END FSM COMPONENT
 
 	//TOKEN COMPONENT
@@ -101,6 +74,16 @@ void parser(char *lexCode)
 	lexTok = strtok(NULL,delimit);
 	//END TOKEN COMPONENT
 
+	//PDA STACK COMPONENTS
+	struct Node *pds = NULL;
+	struct Node *quadNode = NULL;
+	struct Quads *quad = (struct Quads*)malloc(sizeof(struct Quads));
+	quad->op = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+	quad->polyOne = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+	quad->polyTwo = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+	quad->result = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+	//END PDA STACK COMPONENTS
+
 	while(strcmp(lexTok,"<symbol>"))
 	{
 		strcpy(tok, lexTok);
@@ -109,7 +92,7 @@ void parser(char *lexCode)
 
 		//FSM COMPONENT
 		prs_fun = prsState[cur_state];
-		lc = prs_fun(tok, lab);
+		lc = prs_fun(tok, lab, &quad, &pds, &quadNode);
 		if(endprs == cur_state)
 			break;
 		old_state = cur_state;
@@ -129,48 +112,65 @@ enum prs_codes lookup_prsTransitions(enum prs_codes cur_state, enum label_codes 
 	return endprs;
 }
 
-int new_prs(char *tok, int lab)
+int new_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("NEW:\t%s\t%d\n", tok, lab);
+
+	(*quad)->op = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+
+	if(lab==sRead || lab==sWrite)
+	{
+		strncpy((*quad)->op->lit, tok, sizeof(tok));
+		(*quad)->op->label = lab;
+	}
+
 	return lab;
 }
 
-int key_prs(char *tok, int lab)
+int key_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("KEY:\t%s\t%d\n", tok, lab);
+
+	if((*quad)->op->label == sRead || (*quad)->op->label == sWrite)
+	{
+		strncpy((*quad)->result->lit, tok, sizeof(tok));
+		(*quad)->result->label = lab;
+		push(quadNode, *quad, sizeof(struct Quads));
+	}
+
 	return lab;
 }
 
-int io_prs(char *tok, int lab)
+int io_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("IO:\t%s\t%d\n", tok, lab);
 	return lab;
 }
 
-int op_prs(char *tok, int lab)
+int op_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("OP:\t%s\t%d\n", tok, lab);
 	return lab;
 }
 
-int alpha_prs(char *tok, int lab)
+int alpha_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("ALP:\t%s\t%d\n", tok, lab);
 	return lab;
 }
-int num_prs(char *tok, int lab)
+int num_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("NUM:\t%s\t%d\n", tok, lab);
 	return lab;
 }
 
-int error_prs(char *tok, int lab)
+int error_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("ERR:\t%s\t%d\n", tok, lab);
 	return lab;
 }
 
-int end_prs(char *tok, int lab)
+int end_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("END:\t%s\t%d\n", tok, lab);
 	return lab;
