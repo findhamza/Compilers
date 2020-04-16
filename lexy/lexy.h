@@ -20,6 +20,7 @@ void symbolizer(struct Node*, struct Node**);
 void append(char*,char);
 int getLabel(char*);
 void adrsCounter(struct Node*);
+void tempCounter(struct Node*, struct Node**);
 
 //FSM Tokenizer Functions
 enum ret_codes assort(char);

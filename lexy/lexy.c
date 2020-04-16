@@ -1,3 +1,4 @@
+
 /* Author:	Hamza Syed	*/
 /* COSC4317:	Compilers	*/
 /* Part-1:	Lexical		*/
@@ -295,6 +296,9 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 //		struct tokenClass* tokenInfo = (struct tokenClass*)malloc(sizeof(struct tokenClass));
 		struct tokenClass* tokenInfo = NULL;
 
+//	tokenhead
+		struct Node* tokHead = token;
+
 	//Symbol Table Component
 	unsigned symSize = sizeof(struct symbol);
 	struct Node *symbolNode = NULL;
@@ -308,7 +312,7 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 
 	for(;;){
 		getTokenInfo(token->data, &tokenInfo);
-		printToken(tokenInfo);
+//Debug		printToken(tokenInfo);
 
 		//FSM Component
 		sym_fun = symState[cur_state];
@@ -318,7 +322,7 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 		old_state = cur_state;
 		cur_state = lookup_symTransitions(cur_state, lc);
 		//End FSM Component
-		printf("STATE::\tsrc:%s\tret:%s\tdst:%s\n\n", get_symState[old_state], label[lc], get_symState[cur_state]);
+//Debug		printf("STATE::\tsrc:%s\tret:%s\tdst:%s\n\n", get_symState[old_state], label[lc], get_symState[cur_state]);
 
 		if(token->next != NULL)
 			(token) = token->next;
@@ -327,6 +331,7 @@ void symbolizer(struct Node* token, struct Node** symbolChain)
 	}
 
 	printf("\n\n");
+	tempCounter(tokHead, &symbolNode);
 	normalize(&symbolNode);
 	adrsCounter(symbolNode);
 //	printLisa(symbolNode, printSymbol);
@@ -359,6 +364,57 @@ void adrsCounter(struct Node* sym)
 		sym = sym->next;
 	}
 }
+
+void tempCounter(struct Node* tok, struct Node** sym)
+{
+	int max = 0;
+	int counter = 0;
+
+	struct tokenClass* tokDat = NULL;
+
+	normalize(&tok);
+
+	while(tok != NULL)
+	{
+		getTokenInfo(tok->data, &tokDat);
+//Debug		printf("TOKEN: %d\n", tokDat->label);
+		switch(tokDat->label)
+		{
+			case sMinus: counter++;
+				break;
+			case sPlus: counter++;
+				break;
+			case sDivi: counter++;
+				break;
+			case sMul: counter++;
+				break;
+			case sAssgin: counter++;
+				break;
+			case sSemicolon:
+				if(max<counter)
+					max = counter;
+				counter = 0;
+				break;
+		}
+
+		tok = tok->next;
+	}
+
+//Debug	printf("\n\n%d-%d\n\n",max,counter);
+	for(int i=0; i<max; i++)
+	{
+		struct symbol *temp = (struct symbol*)calloc(1,sizeof(struct symbol));
+		temp->token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+		sprintf(temp->token->lit, "temp%d", i);
+		temp->token->label = sVar;
+		temp->val = 0;
+		sprintf(temp->seg, "DS");
+
+		push(sym, temp, sizeof(struct symbol));
+	}
+
+}
+
 enum sym_codes lookup_symTransitions(enum sym_codes cur_state, enum label_codes lc)
 {
 	int table_size = sizeof sym_state_transition / sizeof sym_state_transition[0];
