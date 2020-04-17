@@ -63,8 +63,7 @@ void printQuad(void *f)
 {
 	struct Quads* quad = (struct Quads*)f;
 
-	printf("%s\t%s\t%s\t%s\n", quad->op->lit, quad->polyOne->lit,
-		quad->polyTwo->lit, quad->result->lit);
+	printf("%s\t%s\t%s\t%s\n", quad->op->lit, quad->polyOne->lit, quad->polyTwo->lit, quad->result->lit);
 }
 
 void getSymbolInfo(void*f, struct symbol** sym)

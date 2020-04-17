@@ -120,12 +120,20 @@ int new_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct N
 
 	(*quad)->op = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 
-	if(lab==sRead || lab==sWrite)
+	if(lab == sRead || lab == sWrite)
 	{
 		strncpy((*quad)->op->lit, tok, sizeof(tok));
 		(*quad)->op->label = lab;
 	}
-
+/**
+	if(lab = sString)
+	{
+		struct tokenClass *token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+		sprintf(token->lit, "%s", tok);
+		token->label = lab;
+		push(pds, token, sizeof(struct tokenClass));
+	}
+**/
 	return lab;
 }
 
@@ -165,6 +173,15 @@ int alpha_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct
 int num_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("NUM:\t%s\t%d\n", tok, lab);
+/**
+	if(lab >= sMinus && lab <= sAssgin && !is_empty(pds))
+	{
+		struct tokenClass *token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+		sprintf(token->lit, "%s", tok);
+		token->label = lab;
+		push(pds, token, sizeof(struct tokenClass));
+	}
+**/
 	return lab;
 }
 

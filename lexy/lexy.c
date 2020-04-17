@@ -372,7 +372,7 @@ void tempCounter(struct Node* tok, struct Node** sym)
 
 	struct tokenClass* tokDat = NULL;
 
-	normalize(&tok);
+//	normalize(&tok);
 
 	while(tok != NULL)
 	{
