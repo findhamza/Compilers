@@ -103,6 +103,7 @@ void parser(char *lexCode)
 	}
 
 	printLisa(quadNode, printQuad);
+	printLisa(pds, printToken);
 }
 
 enum prs_codes lookup_prsTransitions(enum prs_codes cur_state, enum label_codes lc)
@@ -118,22 +119,24 @@ int new_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct N
 {
 		printf("NEW:\t%s\t%d\n", tok, lab);
 
+	struct tokenClass *token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+	sprintf(token->lit, "%s", tok);
+	token->label = lab;
+
 	(*quad)->op = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 
 	if(lab == sRead || lab == sWrite)
 	{
+		//pleaseEmpty(pds);
 		strncpy((*quad)->op->lit, tok, sizeof(tok));
 		(*quad)->op->label = lab;
 	}
-/**
-	if(lab = sString)
+
+	if(token->label == sString)
 	{
-		struct tokenClass *token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
-		sprintf(token->lit, "%s", tok);
-		token->label = lab;
 		push(pds, token, sizeof(struct tokenClass));
 	}
-**/
+
 	return lab;
 }
 
@@ -168,20 +171,29 @@ int op_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct No
 int alpha_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("ALP:\t%s\t%d\n", tok, lab);
-	return lab;
-}
-int num_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
-{
-		printf("NUM:\t%s\t%d\n", tok, lab);
-/**
-	if(lab >= sMinus && lab <= sAssgin && !is_empty(pds))
+
+	if(lab >= sMinus && lab <= sAssgin && is_empty(pds) == false)
 	{
 		struct tokenClass *token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 		sprintf(token->lit, "%s", tok);
 		token->label = lab;
 		push(pds, token, sizeof(struct tokenClass));
 	}
-**/
+
+	return lab;
+}
+int num_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
+{
+		printf("NUM:\t%s\t%d\n", tok, lab);
+
+	if(lab >= sMinus && lab <= sAssgin && is_empty(pds) == false)
+	{
+		struct tokenClass *token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+		sprintf(token->lit, "%s", tok);
+		token->label = lab;
+		push(pds, token, sizeof(struct tokenClass));
+	}
+
 	return lab;
 }
 

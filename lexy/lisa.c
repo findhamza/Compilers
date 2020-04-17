@@ -32,7 +32,18 @@ void *pop(struct Node** headRef, size_t dataSize)
 
 bool is_empty(struct Node** headRef)
 {
-	return !headRef;
+	if(*headRef == NULL)
+	{
+		printf("EMPTY LIST\n");
+		return true;
+	}
+	return false;
+}
+
+void pleaseEmpty(struct Node** headRef)
+{
+	free(*headRef);
+	(*headRef) = NULL;
 }
 
 void printLisa(struct Node *node, void (*fptr)(void*))
