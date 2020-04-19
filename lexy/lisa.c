@@ -24,7 +24,7 @@ void *pop(struct Node** headRef, size_t dataSize)
 		return NULL;
 
 	tmp = *headRef;
-//	data = (*headRef)->data;
+	data = (*headRef)->data;
 	*headRef = (*headRef)->next;
 	free(tmp);
 	return data;

@@ -6,7 +6,9 @@
 
 int main()
 {
-	char lexFile[] = "pe1.lic";
+//	char lexFile[] = "pe1.lic";
+	char lexFile[] = "pgm1.lic";
+
 	char *lexCode = LexReader(lexFile);
 
 	parser(lexCode);
@@ -165,6 +167,15 @@ int io_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct No
 int op_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("OP:\t%s\t%d\n", tok, lab);
+
+	if((lab == sString || lab == sInt) && is_empty(pds) == false)
+	{
+		struct tokenClass *token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+		sprintf(token->lit, "%s", tok);
+		token->label = lab;
+		push(pds, token, sizeof(struct tokenClass));
+	}
+
 	return lab;
 }
 
@@ -172,13 +183,16 @@ int alpha_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct
 {
 		printf("ALP:\t%s\t%d\n", tok, lab);
 
-	if(lab >= sMinus && lab <= sAssgin && is_empty(pds) == false)
+	if(lab >= sAssgin && lab <= sMul && is_empty(pds) == false)
 	{
 		struct tokenClass *token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 		sprintf(token->lit, "%s", tok);
 		token->label = lab;
 		push(pds, token, sizeof(struct tokenClass));
 	}
+
+	if(lab == sSemicolon)
+		InToPost(pds, quadNode);
 
 	return lab;
 }
@@ -186,13 +200,16 @@ int num_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct N
 {
 		printf("NUM:\t%s\t%d\n", tok, lab);
 
-	if(lab >= sMinus && lab <= sAssgin && is_empty(pds) == false)
+	if(lab >= sAssgin && lab <= sMul && is_empty(pds) == false)
 	{
 		struct tokenClass *token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 		sprintf(token->lit, "%s", tok);
 		token->label = lab;
 		push(pds, token, sizeof(struct tokenClass));
 	}
+
+	if(lab == sSemicolon)
+		InToPost(pds, quadNode);
 
 	return lab;
 }
