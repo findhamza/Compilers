@@ -90,6 +90,12 @@ void getTokenInfo(void *f, struct tokenClass** tok)
 	(*tok) = data;
 }
 
+void getQuadInfo(void *f, struct Quads** quad)
+{
+	struct Quads* data = (struct Quads*)f;
+	(*quad) = data;
+}
+
 void normalize(struct Node** headRef)
 {
 	struct Node* prev = NULL;

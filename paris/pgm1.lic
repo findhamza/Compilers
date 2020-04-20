@@ -33,6 +33,7 @@ N	14
 y	14
 ;	8
 }	6
+<end>
 <symbol>
 Pgm1	0	0	0	CS
 M	1	13	0	DS
@@ -46,4 +47,11 @@ temp0	2	0	7	DS
 temp1	2	0	8	DS
 temp2	2	0	9	DS
 temp3	2	0	10	DS
+<end>
+<quad>
+=	97		Y
+*	M	N	temp0
++	temp0	18	temp1
+-	temp1	y	temp2
+=	temp2		X
 <end>

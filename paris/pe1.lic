@@ -38,6 +38,7 @@ Write	4
 X	14
 ;	8
 }	6
+<end>
 <symbol>
 PgmEx1Nasm32Linux	0	0	0	CS
 M	1	7	0	DS
@@ -50,4 +51,13 @@ temp0	2	0	6	DS
 temp1	2	0	7	DS
 temp2	2	0	8	DS
 temp3	2	0	9	DS
+<end>
+<quad>
+Read			Y
+Read			Z
+*	Y	Z	temp0
++	temp0	12	temp1
++	M	temp1	temp2
+=	temp2		X
+Write			X
 <end>

@@ -15,7 +15,8 @@
 //
 //Function Init Sector
 char *LexReader(char *fileName);
-void parser(char *lexCode);
+void ParseWriter(char*, struct Node*);
+void parser(char *lexCode, struct Node**);
 
 //driver
 //int missy();

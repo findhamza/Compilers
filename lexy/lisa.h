@@ -17,6 +17,7 @@ void printToken(void*);
 void printQuad(void*);
 void getSymbolInfo(void*, struct symbol**);
 void getTokenInfo(void*, struct tokenClass**);
+void getQuadInfo(void*, struct Quads**);
 void normalize(struct Node**);
 
 #endif

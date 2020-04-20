@@ -38,6 +38,7 @@ Write	4
 X	14
 ;	8
 }	6
+<end>
 <symbol>
 PgmEx1Nasm32Linux	0	0	0	CS
 M	1	7	0	DS

@@ -6,8 +6,8 @@
 
 int main()
 {
-//	char javaZero[] = "pgm1.javaz";
-	char javaZero[] = "pe1.javaz";
+	char javaZero[] = "pgm1.javaz";
+//	char javaZero[] = "pe1.javaz";
 	struct Node *tokNode = NULL;
 	struct Node *symNode = NULL;
 
@@ -102,6 +102,7 @@ void FileWriter(char *inFile, struct Node* tok, struct Node* sym)
 		free(tok->data);
 		tok = tok->next;
 	}
+	fprintf(file, "%s\n", end);
 	fprintf(file, "%s\n", symbol);
 	while(sym != NULL)
 	{

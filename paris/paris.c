@@ -6,12 +6,14 @@
 
 int main()
 {
-//	char lexFile[] = "pe1.lic";
-	char lexFile[] = "pgm1.lic";
+	char lexFile[] = "pe1.lic";
+//	char lexFile[] = "pgm1.lic";
 
 	char *lexCode = LexReader(lexFile);
+	struct Node *quadNode = NULL;
 
-	parser(lexCode);
+	parser(lexCode, &quadNode);
+	ParseWriter(lexFile, quadNode);
 }
 
 char *LexReader(char *fileName)
@@ -50,7 +52,36 @@ char *LexReader(char *fileName)
         return buffer;
 }
 
-void parser(char *lexCode)
+void ParseWriter(char *inFile, struct Node* quadNode)
+{
+	char ext[] = ".lic";
+
+	const char *quad = "<quad>";
+	const char *end = "<end>";
+
+	struct Quads *quadDat = (struct Quads*)calloc(1,sizeof(struct Quads));
+
+	FILE *file = fopen(inFile, "a");
+	if(file == NULL)
+		printf("FILE WRITER CRASHED IN PARIS");
+
+	fprintf(file, "%s\n", quad);
+	while(quadNode != NULL)
+	{
+		getQuadInfo(quadNode->data, &quadDat);
+		fprintf(file, "%s\t%s\t%s\t%s\n", quadDat->op->lit, quadDat->polyOne->lit,
+			quadDat->polyTwo->lit, quadDat->result->lit);
+		free(quadNode->data);
+		quadNode = quadNode->next;
+	}
+	fprintf(file, "%s\n", end);
+
+	fclose(file);
+	free(quadDat);
+	free(quadNode);
+}
+
+void parser(char *lexCode, struct Node** quadChain)
 {
 	//FSM COMPONENT
 	enum prs_codes cur_state = newprs;
@@ -86,7 +117,7 @@ void parser(char *lexCode)
 	quad->result = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 	//END PDA STACK COMPONENTS
 
-	while(strcmp(lexTok,"<symbol>"))
+	while(strcmp(lexTok,"<end>"))
 	{
 		strcpy(tok, lexTok);
 		lab = atoi(strtok(NULL, delimit));
@@ -106,6 +137,9 @@ void parser(char *lexCode)
 
 	printLisa(quadNode, printQuad);
 	printLisa(pds, printToken);
+	normalize(&quadNode);
+
+	(*quadChain) = quadNode;
 }
 
 enum prs_codes lookup_prsTransitions(enum prs_codes cur_state, enum label_codes lc)
