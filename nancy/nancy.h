@@ -21,3 +21,4 @@ int getLabel(char*);
 void writeAsm(char*, struct Node*, struct Node*);
 void initAsm(char*);
 void appendAsm(char*, char*);
+void endAsm(char*);

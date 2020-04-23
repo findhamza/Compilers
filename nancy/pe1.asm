@@ -1,4 +1,4 @@
-%include "IOSR.ams"
+%include "IOSR.asm"
 global _start
 
 
@@ -18,3 +18,48 @@ section .bss
 	temp3	RESW	1
 
 
+section .txt
+
+_start:
+
+	call PrintString
+	call GetAnInteger
+	mov ax, [ReadInt]
+	mov [Y], ax
+
+
+	call PrintString
+	call GetAnInteger
+	mov ax, [ReadInt]
+	mov [Z], ax
+
+
+	mov ax, [Y]
+	mul word [Z]
+	mov [temp0], ax
+
+
+	mov ax, [temp0]
+	add ax, [lit12]
+	mov [temp1], ax
+
+
+	mov ax, [M]
+	add ax, [temp1]
+	mov [temp2], ax
+
+
+	mov ax, [temp2]
+	mov [X], ax
+
+
+	mov ax, [X]
+	call ConvertIntegerToString
+	mov eax, 4
+	mov ebx, 1
+	mov ecx, Result
+	mov edx, ResultEnd
+	int 80h
+
+
+	call fini

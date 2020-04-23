@@ -241,6 +241,7 @@ void writeAsm(char* file, struct Node* symbolChain, struct Node* quadChain)
 
 	appendAsm(asmFile, asmData);
 	appendAsm(asmFile, asmBss);
+	appendAsm(asmFile, "section .txt");
 
 	char codeData[buffer];
 	sprintf(codeData, "_start:");
@@ -248,10 +249,12 @@ void writeAsm(char* file, struct Node* symbolChain, struct Node* quadChain)
 
 	while(quadChain)
 	{
-		//sprintf(codeData, "%s", getCode(quadChain->data));
-		//append(asmFile, codeData);
+		sprintf(codeData, "%s", getCode(quadChain->data));
+		appendAsm(asmFile, codeData);
 		quadChain = quadChain->next;
 	}
+
+	endAsm(asmFile);
 }
 
 void initAsm(char* asmFile)
@@ -260,7 +263,7 @@ void initAsm(char* asmFile)
 	if(file == NULL)
 		printf("FILE WRITER CRASHED IN NANCY\n exit(N1)\n");
 
-	fprintf(file, "%%include \"IOSR.ams\"\nglobal _start\n\n\n");
+	fprintf(file, "%%include \"IOSR.asm\"\nglobal _start\n\n\n");
 	fclose(file);
 }
 
@@ -272,4 +275,31 @@ void appendAsm(char* asmFile, char *data)
 
 	fprintf(file, "%s\n\n", data);
 	fclose(file);
+}
+
+void endAsm(char* asmFile)
+{
+	FILE *file = fopen(asmFile, "a");
+	if(file == NULL)
+		printf("FILE WRITER CRASHED IN NANCY\n exit(N3)\n");
+
+	fprintf(file, "\tcall fini\n");
+	fclose(file);
+
+	char fileName[32] = "";
+	char pgmName[32] = "";
+	sprintf(fileName, "%s", asmFile);
+	sprintf(pgmName, "%s", strtok(asmFile, "."));
+
+	char cmd1[64] = "";
+	char cmd2[64] = "";
+	char cmd3[64] = "";
+
+	sprintf(cmd1, "nasm -felf64 -o IOSR.o IOSR.asm");
+	sprintf(cmd2, "nasm -felf64 -o %s.o %s", pgmName, fileName);
+	sprintf(cmd3, "ld -o %s %s.o IOSR.o", pgmName, pgmName);
+
+	system(cmd1);
+	system(cmd2);
+	system(cmd3);
 }
