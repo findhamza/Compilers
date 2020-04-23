@@ -54,7 +54,7 @@ char *LexReader(char *fileName)
 
 void ParseWriter(char *inFile, struct Node* quadNode)
 {
-	char ext[] = ".lic";
+	char *outFile;
 
 	const char *quad = "<quad>";
 	const char *end = "<end>";
@@ -77,6 +77,12 @@ void ParseWriter(char *inFile, struct Node* quadNode)
 	fprintf(file, "%s\n", end);
 
 	fclose(file);
+
+	outFile = (char*)calloc(1,sizeof(inFile));
+	strncpy(outFile, inFile, sizeof(inFile));
+	strcat(outFile, "p");
+	rename(inFile, outFile);
+
 	free(quadDat);
 	free(quadNode);
 }
