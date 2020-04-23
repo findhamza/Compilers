@@ -9,6 +9,7 @@
 #include "../lexy/struct.h"
 #include "../lexy/lisa.h"
 #include "../lexy/glarr.h"
+#include "ophelia.h"
 
 //driver
 void NancyDriver();

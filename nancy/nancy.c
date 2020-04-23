@@ -242,9 +242,14 @@ void writeAsm(char* file, struct Node* symbolChain, struct Node* quadChain)
 	appendAsm(asmFile, asmData);
 	appendAsm(asmFile, asmBss);
 
+	char codeData[buffer];
+	sprintf(codeData, "_start:");
+	appendAsm(asmFile, codeData);
+
 	while(quadChain)
 	{
-		//TODO
+		//sprintf(codeData, "%s", getCode(quadChain->data));
+		//append(asmFile, codeData);
 		quadChain = quadChain->next;
 	}
 }
