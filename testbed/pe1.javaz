@@ -1,0 +1,8 @@
+Class PgmEx1Nasm32Linux {
+	Const M = 7, N = 85;
+	Var X, Y, Z;
+	Read Y;
+	Read Z;
+	X = M + Y * Z + 12;
+	Write X;
+}

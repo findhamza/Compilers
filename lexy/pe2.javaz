@@ -1,0 +1,10 @@
+Class Pgm2 {
+	Const A = 1, B = 2;
+	Var C, D;
+	Read D;
+	Read Z;
+	Write A;
+	Write B;
+	Write C;
+	Write D;
+}

@@ -159,7 +159,7 @@ char* NumToLit(char* val)
 	if(!atoi(val))
 		return val;
 
-	char *temp = malloc(sizeof(char)*32);
+	char *temp = (char*)calloc(32,sizeof(char));
 	strcat(temp, "lit");
 	strcat(temp, val);
 

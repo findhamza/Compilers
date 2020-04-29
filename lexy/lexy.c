@@ -4,6 +4,9 @@
 /* Part-1:	Lexical		*/
 #include "lexy.h"
 
+bool tokenize = false;
+
+/*
 int main()
 {
 	char javaZero[] = "pgm1.javaz";
@@ -25,6 +28,23 @@ int main()
 	FileWriter(javaZero, tokNode, symNode);
 
 	return 0;
+}
+*/
+
+void LexyDriver(char *javaZero)
+{
+	struct Node *tokNode = NULL;
+	struct Node *symNode = NULL;
+
+	char *javCode = FileReader(javaZero);
+	tokenizer(javCode, &tokNode);
+	symbolizer(tokNode, &symNode);
+
+	printLisa(tokNode, printToken);
+	printLisa(symNode, printSymbol);
+	printf("%s", javCode);
+
+	FileWriter(javaZero, tokNode, symNode);
 }
 
 char *FileReader(char *fileName)

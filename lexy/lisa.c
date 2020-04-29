@@ -2,9 +2,9 @@
 
 void push(struct Node** headRef, void *newData, size_t dataSize)
 {
-	struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+	struct Node* newNode = (struct Node*)calloc(1,sizeof(struct Node));
 
-	newNode->data = malloc(dataSize);
+	newNode->data = (void*)calloc(1,dataSize);
 	newNode->next = (*headRef);
 
 	memmove(newNode->data, newData, dataSize);

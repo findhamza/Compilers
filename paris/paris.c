@@ -3,12 +3,21 @@
 /* Part-1:      Lexical         */
 
 #include "paris.h"
-
+/*
 int main()
 {
 	char lexFile[] = "pe1.lic";
 //	char lexFile[] = "pgm1.lic";
 
+	char *lexCode = LexReader(lexFile);
+	struct Node *quadNode = NULL;
+
+	parser(lexCode, &quadNode);
+	ParseWriter(lexFile, quadNode);
+}
+*/
+void ParisDriver(char *lexFile)
+{
 	char *lexCode = LexReader(lexFile);
 	struct Node *quadNode = NULL;
 

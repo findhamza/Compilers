@@ -1,0 +1,15 @@
+Class ProgramTwo {
+
+	Const A = 9;
+	Const B = 10;
+
+	Var C, D, E;
+
+	C = A;
+	D = C;
+	E = B;
+
+	Write C;
+	Write D;
+	Write E;
+}

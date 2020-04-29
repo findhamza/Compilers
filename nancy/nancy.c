@@ -3,17 +3,17 @@
 /* Part-1:      Lexical         */
 
 #include "nancy.h"
-
+/*
 int main()
 {
 	NancyDriver();
 
 	return 0;
 }
-
-void NancyDriver()
+*/
+void NancyDriver(char* prsFile)
 {
-	char *prsFile = "pe1.licp";
+//	char *prsFile = "pe1.licp";
 //	char *prsFile = "pgm1.lic";
 
 	char *prsCode = PrsReader(prsFile);
@@ -154,7 +154,7 @@ void getNodes(char *prsCode, struct Node** tokenChain,
 		}
 
 		strcpy((*quadTok).op->lit, word);
-		(*quadTok).op->label = getLabel((*quadTok).op->lit);
+		(*quadTok).op->label = getLabel_nancy((*quadTok).op->lit);
 
 		label = (*quadTok).op->label;
 
@@ -170,7 +170,8 @@ void getNodes(char *prsCode, struct Node** tokenChain,
 			}
 		}
 
-		strcpy((*quadTok).result->lit, strtok(NULL, delimit));
+//Backup	strcpy((*quadTok).result->lit, strtok(NULL, delimit));
+		sprintf((*quadTok).result->lit, "%s", strtok(NULL, delimit));
 		(*quadTok).result->label = sString;
 
 		push(quadChain, quadTok, sizeof(struct Quads));
@@ -178,7 +179,7 @@ void getNodes(char *prsCode, struct Node** tokenChain,
 
 }
 
-int getLabel(char* lit)
+int getLabel_nancy(char* lit)
 {
 	if(strcmp(lit, "=")==0)
 		return sAssgin;
@@ -294,12 +295,15 @@ void endAsm(char* asmFile)
 	char cmd1[64] = "";
 	char cmd2[64] = "";
 	char cmd3[64] = "";
+	char cmd4[64] = "";
 
 	sprintf(cmd1, "nasm -felf64 -o IOSR.o IOSR.asm");
 	sprintf(cmd2, "nasm -felf64 -o %s.o %s", pgmName, fileName);
 	sprintf(cmd3, "ld -o %s %s.o IOSR.o", pgmName, pgmName);
+	sprintf(cmd4, "rm *.o");
 
 	system(cmd1);
 	system(cmd2);
 	system(cmd3);
+	system(cmd4);
 }

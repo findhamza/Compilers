@@ -1,3 +1,6 @@
+#ifndef PARIS_H
+#define PARIS_H
+
 /* Author:      Hamza Syed      */
 /* COSC4317:    Compilers       */
 /* Part-1:      Lexical         */
@@ -14,6 +17,7 @@
 
 //
 //Function Init Sector
+void ParisDriver(char*);
 char *LexReader(char *fileName);
 void ParseWriter(char*, struct Node*);
 void parser(char *lexCode, struct Node**);
@@ -34,9 +38,9 @@ int end_prs(char*,int,struct Quads**,struct Node**,struct Node**);
 
 //
 //FSM Parser Components
-int (* prsState[])(char*, int, struct Quads**, struct Node**, struct Node**) = { new_prs, key_prs, io_prs, op_prs, alpha_prs, num_prs, error_prs, end_prs};
+static const int (* prsState[])(char*, int, struct Quads**, struct Node**, struct Node**) = { new_prs, key_prs, io_prs, op_prs, alpha_prs, num_prs, error_prs, end_prs};
 enum prs_codes { newprs, keyprs, ioprs, opprs, alphaprs, numprs, errorprs, endprs};
-const char* get_prsState[] = { "NewPrs", "KeyPrs", "IoPrs", "OpPrs", "AlphaPrs", "NumPrs", "ErrorPrs", "EndPrs"};
+static const char* get_prsState[] = { "NewPrs", "KeyPrs", "IoPrs", "OpPrs", "AlphaPrs", "NumPrs", "ErrorPrs", "EndPrs"};
 
 	//label_codes enum lineup with global label string array in glarr.h
 
@@ -46,7 +50,7 @@ struct prsTransition {
 	enum prs_codes prs_dst;
 };
 
-struct prsTransition prs_state_transition[] = {
+static struct prsTransition prs_state_transition[] = {
 
 		{newprs,        sClass,         keyprs},
                 {newprs,        sConst,         keyprs},
@@ -99,3 +103,4 @@ struct prsTransition prs_state_transition[] = {
 enum prs_codes lookup_prsTransitions(enum prs_codes, enum label_codes);
 //END FSM Components
 
+#endif

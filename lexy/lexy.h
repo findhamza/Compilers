@@ -1,3 +1,5 @@
+#ifndef LEXY_H
+#define LEXY_H
 /* Author:	Hamza Syed	*/
 /* COSC4317:	Compilers	*/
 /* Part-1:	Lexical		*/
@@ -12,6 +14,7 @@
 
 //
 //Function Init Sector
+void LexyDriver(char*);
 char *FileReader(char *fileName);
 void FileWriter(char*, struct Node*, struct Node*);
 void tokenizer(char *jav, struct Node**);
@@ -47,9 +50,9 @@ int end_sym(struct tokenClass*, struct symbol**, struct Node**);
 
 	//
 	//FSM Symbol Components
-	int (* symState[])(struct tokenClass*, struct symbol**, struct Node**) = { new_sym, key_sym, io_sym, op_sym, alpha_sym, num_sym, error_sym, end_sym};
+	static const int (* symState[])(struct tokenClass*, struct symbol**, struct Node**) = { new_sym, key_sym, io_sym, op_sym, alpha_sym, num_sym, error_sym, end_sym};
 	enum sym_codes { newsym, keysym, iosym, opsym, alphasym, numsym, errorsym, endsym};
-	const char* get_symState[] = { "NewSym", "KeySym", "IoSym", "OpSym", "AlphaSym", "NumSym", "ErrorSym", "EndSym"};
+	static const char* get_symState[] = { "NewSym", "KeySym", "IoSym", "OpSym", "AlphaSym", "NumSym", "ErrorSym", "EndSym"};
 
 	//label_codes enum lineup with global label string array in glarr.h
 
@@ -59,7 +62,7 @@ int end_sym(struct tokenClass*, struct symbol**, struct Node**);
 		enum sym_codes sym_dst;
 	};
 
-	struct symTransition sym_state_transition[] = {
+	static struct symTransition sym_state_transition[] = {
 
 		{newsym, 	sClass,		keysym},
 		{newsym, 	sConst, 	keysym},
@@ -116,20 +119,20 @@ int end_sym(struct tokenClass*, struct symbol**, struct Node**);
 //
 //FSM Tokenizer Components
 //The following three arrays need to be in sync for proper results
-int (* state[])(char) = { entry_state, letter_state, digit_state, symbol_state, token_state, exit_state};
+static int (* state[])(char) = { entry_state, letter_state, digit_state, symbol_state, token_state, exit_state};
 enum state_codes { entry, letter, digit, symbol, token, end};
-const char* get_state[] = { "entry", "letter", "digit", "symbol", "token", "end"};
+static const char* get_state[] = { "entry", "letter", "digit", "symbol", "token", "end"};
 
 //The following two arrays need to be in sync for proper results
 enum ret_codes { alpha, num, lcb, rcb, comma, semicolon, assign, plus, sub, mul, divi, space};
-const char* get_ret[] = { "alpha", "num", "lcb", "rcb", "comma", "semicolon", "assign", "plus", "sub", "mul", "divi", "space"};
+static const char* get_ret[] = { "alpha", "num", "lcb", "rcb", "comma", "semicolon", "assign", "plus", "sub", "mul", "divi", "space"};
 struct transition {
 	enum state_codes src_state;
 	enum ret_codes ret_codes;
 	enum state_codes dst_state;
 };
 
-struct transition state_transition[] = {
+static struct transition state_transition[] = {
 
 	//entry states
 	{entry,		alpha,		letter},
@@ -210,4 +213,6 @@ enum state_codes lookup_transitions(enum state_codes, enum ret_codes);
 
 //
 //Flags
-bool tokenize = false;
+extern bool tokenize;
+
+#endif
