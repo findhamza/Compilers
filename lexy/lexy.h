@@ -124,8 +124,8 @@ enum state_codes { entry, letter, digit, symbol, token, end};
 static const char* get_state[] = { "entry", "letter", "digit", "symbol", "token", "end"};
 
 //The following two arrays need to be in sync for proper results
-enum ret_codes { alpha, num, lcb, rcb, comma, semicolon, assign, plus, sub, mul, divi, space};
-static const char* get_ret[] = { "alpha", "num", "lcb", "rcb", "comma", "semicolon", "assign", "plus", "sub", "mul", "divi", "space"};
+enum ret_codes { alpha, num, lcb, rcb, comma, semicolon, assign, plus, sub, mul, divi, gt, lt, space};
+static const char* get_ret[] = { "alpha", "num", "lcb", "rcb", "comma", "semicolon", "assign", "plus", "sub", "mul", "divi", "gt", "lt", "space"};
 struct transition {
 	enum state_codes src_state;
 	enum ret_codes ret_codes;
@@ -147,6 +147,9 @@ static struct transition state_transition[] = {
 	{entry, 	mul,		symbol},
 	{entry, 	divi,		symbol},
 	{entry,		space,		symbol},
+
+	{entry,		lt,		symbol},
+	{entry,		gt,		symbol},
 
 	//letter states
 	{letter,	alpha,		letter},
@@ -182,7 +185,7 @@ static struct transition state_transition[] = {
 	{symbol, 	rcb,		token},
 	{symbol, 	comma,		token},
 	{symbol, 	semicolon,	token},
-	{symbol, 	assign,		token},
+	{symbol, 	assign,		symbol},
 	{symbol, 	plus,		token},
 	{symbol, 	sub,		token},
 	{symbol, 	mul,		token},
@@ -201,6 +204,10 @@ static struct transition state_transition[] = {
 	{token, 	sub,		symbol},
 	{token, 	mul,		symbol},
 	{token, 	divi,		symbol},
+
+	{token,		lt,		symbol},
+	{token,		gt,		symbol},
+
 	{token,		space,		entry}};
 
 

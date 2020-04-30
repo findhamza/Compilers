@@ -1,0 +1,2 @@
+Enter an integer(less than 32,765): 264
+Ans = 00001

@@ -204,7 +204,7 @@ int getLabel_nancy(char* lit)
 	if(strcmp(lit, ">")==0)
 		return sJg;
 	if(strcmp(lit, "<")==0)
-		return sJle;
+		return sJl;
 	if(strcmp(lit, "Read")==0)
 		return sRead;
 	if(strcmp(lit, "Write")==0)

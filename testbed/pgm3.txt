@@ -1,0 +1,6 @@
+Enter an integer(less than 32,765): 7
+Enter an integer(less than 32,765): 9
+Ans = 00063
+Ans = 00000
+Ans = 00016
+Ans = 65534

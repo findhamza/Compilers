@@ -41,8 +41,7 @@ B	23
 Endif	8
 If	5
 A	23
-<	13
-=	18
+<=	15
 B	23
 Then	6
 Write	4
@@ -55,8 +54,7 @@ B	23
 Endif	8
 If	5
 A	23
->	14
-=	18
+>=	16
 B	23
 Then	6
 Write	4
@@ -69,8 +67,7 @@ B	23
 Endif	8
 If	5
 A	23
-=	18
-=	18
+==	17
 B	23
 Then	6
 Write	4
@@ -87,8 +84,6 @@ Endif	8
 pgm5	0	0	0	CS
 A	2	0	0	DS
 B	2	0	1	DS
-temp0	2	0	2	DS
-temp1	2	0	3	DS
 <end>
 <quad>
 Read			A
@@ -105,4 +100,22 @@ Write			A
 Else			4
 Write			B
 Endif			5
+<=	A	B	
+Then			6
+Write			A
+Else			7
+Write			B
+Endif			8
+>=	A	B	
+Then			9
+Write			A
+Else			10
+Write			B
+Endif			11
+==	A	B	
+Then			12
+Write			A
+Else			13
+Write			B
+Endif			14
 <end>

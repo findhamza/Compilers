@@ -1,0 +1,77 @@
+<token>
+Class	0
+isEven	23
+{	9
+Var	2
+quotient	23
+,	11
+number	23
+;	12
+Const	1
+yes	23
+=	18
+1	24
+,	11
+no	23
+=	18
+0	24
+,	11
+two	23
+=	18
+2	24
+;	12
+Read	3
+number	23
+;	12
+quotient	23
+=	18
+number	23
+/	21
+two	23
+;	12
+quotient	23
+=	18
+quotient	23
+*	22
+2	24
+;	12
+If	5
+quotient	23
+==	17
+number	23
+Then	6
+Write	4
+yes	23
+;	12
+Else	7
+Write	4
+no	23
+;	12
+Endif	8
+}	10
+<end>
+<symbol>
+isEven	0	0	0	CS
+quotient	2	0	0	DS
+number	2	0	1	DS
+yes	1	1	2	DS
+no	1	0	3	DS
+two	1	2	4	DS
+lit2	1	2	5	DS
+temp0	2	0	6	DS
+temp1	2	0	7	DS
+temp2	2	0	8	DS
+<end>
+<quad>
+Read			number
+/	number	two	temp0
+=	temp0		quotient
+*	quotient	2	temp0
+=	temp0		quotient
+==	quotient	number	
+Then			0
+Write			yes
+Else			1
+Write			no
+Endif			2
+<end>

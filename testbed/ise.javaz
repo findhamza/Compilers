@@ -1,0 +1,18 @@
+Class isEven {
+
+	Var quotient, number;
+
+	Const yes = 1, no = 0, two = 2;
+
+	Read number;
+
+	quotient = number / two;
+
+	quotient = quotient * 2;
+
+	If quotient == number Then
+		Write yes;
+	Else
+		Write no;
+	Endif
+}

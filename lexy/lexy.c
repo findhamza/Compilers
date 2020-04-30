@@ -179,7 +179,7 @@ void tokenizer(char *jav, struct Node** tokenChain)
 		//End FSM Component
 
 //debug		sleep(1);
-//debug		printf("\nAtom: %c ; O'State; %s ; Ret: %s ; State: %s",atom,get_state[old_state],get_ret[rc],get_state[cur_state]);
+		printf("\nAtom: %c ; O'State; %s ; Ret: %s ; State: %s",atom,get_state[old_state],get_ret[rc],get_state[cur_state]);
 
 //legacy	if(strcmp(get_state[cur_state],"token")!=0)
 			atom_pt++;
@@ -236,6 +236,10 @@ enum ret_codes assort(char a)
 		return mul;
 	else if(a=='/')
 		return divi;
+	else if(a=='>')
+		return gt;
+	else if(a=='<')
+		return lt;
 	else if(isspace(a))
 		return space;
 
