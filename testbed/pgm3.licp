@@ -1,0 +1,84 @@
+<token>
+Class	0
+PGM3	14
+{	5
+Var	2
+somevar	14
+,	7
+othervar	14
+,	7
+ans	14
+;	8
+Read	3
+somevar	14
+;	8
+Read	3
+othervar	14
+;	8
+ans	14
+=	9
+somevar	14
+*	13
+othervar	14
++	11
+9	15
+;	8
+Write	4
+ans	14
+;	8
+ans	14
+=	9
+somevar	14
+/	12
+othervar	14
+;	8
+Write	4
+ans	14
+;	8
+ans	14
+=	9
+somevar	14
++	11
+othervar	14
+;	8
+Write	4
+ans	14
+;	8
+ans	14
+=	9
+somevar	14
+-	10
+othervar	14
+;	8
+Write	4
+ans	14
+;	8
+}	6
+<end>
+<symbol>
+PGM3	0	0	0	CS
+somevar	2	0	0	DS
+othervar	2	0	1	DS
+ans	2	0	2	DS
+lit9	1	9	3	DS
+temp0	2	0	4	DS
+temp1	2	0	5	DS
+temp2	2	0	6	DS
+<end>
+<quad>
+Read			somevar
+Read			othervar
+*	somevar	othervar	temp0
++	temp0	9	temp1
+=	temp1		ans
+Write			ans
+/	somevar	othervar	temp0
+=	temp0		ans
+Write			ans
++	somevar	othervar	temp0
+=	temp0		ans
+Write			ans
+-	somevar	othervar	temp0
+=	temp0		ans
+Write			ans
+<end>

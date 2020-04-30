@@ -504,7 +504,7 @@ int io_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 
 int op_sym(struct tokenClass* token, struct symbol** sym, struct Node** symNode)
 {
-	if(isdigit(token->lit[0]) && !isalpha(token->lit[0]))
+	if(token->label == sInt)// || (isdigit(token->lit[0]) && !isalpha(token->lit[0])))
 		(*sym)->val = atoi(token->lit);
 
 	if(strcmp((*sym)->token->lit, "\0")==0 && isdigit(token->lit[0]))

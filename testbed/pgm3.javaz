@@ -1,0 +1,16 @@
+Class PGM3 {
+
+	Var somevar, othervar, ans;
+
+	Read somevar;
+	Read othervar;
+	
+	ans = somevar * othervar;
+	Write ans;
+	ans = somevar / othervar;
+	Write ans;
+	ans = somevar + othervar;
+	Write ans;
+	ans = somevar - othervar;
+	Write ans;
+}

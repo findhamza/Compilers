@@ -1,0 +1,10 @@
+Class Pgm4 {
+
+	Var result;
+	Const fifteen = 15, one = 1, twelve = 12, four = 4;
+
+	result = fifteen - 1 * twelve / four + one;
+
+	Write result;
+
+}

@@ -1,0 +1,10 @@
+Class pgm5 {
+
+	Const A = 5, B = 3;
+
+	If A > B Then
+		Write A;
+	Else
+		Write B;
+	Endif
+}
