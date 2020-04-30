@@ -1,0 +1,7 @@
+Enter an integer(less than 32,765): 86
+Enter an integer(less than 32,765): 27
+Ans = 00027
+Ans = 00086
+Ans = 00027
+Ans = 00086
+Ans = 00027
