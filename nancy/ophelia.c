@@ -1,6 +1,6 @@
 #include "ophelia.h"
 
-char* getCode(void* f)
+char* getCode(void* f, int* labCount)
 {
 	struct Quads *quad = (struct Quads*)calloc(1,sizeof(struct Quads));
 	quad->op = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
@@ -15,6 +15,12 @@ char* getCode(void* f)
 
 	if(quad->op->label == sWrite)
 		return writeCode(quad->result->lit);
+
+	if(quad->op->label == sElse)
+		return elseCode(labCount);
+
+	if(quad->op->label == sEndif)
+		return endifCode(labCount);
 
 	if(quad->op->label == sAssgin)
 		return assignCode(quad->polyOne->lit, quad->result->lit);
@@ -34,6 +40,17 @@ char* getCode(void* f)
 	if(quad->op->label == sMinus)
 		return minusCode(quad->polyOne->lit, quad->polyTwo->lit,
 				quad->result->lit);
+
+	if(quad->op->label == sJe)
+		return jeCode(quad->polyOne->lit, quad->polyTwo->lit, labCount);
+	if(quad->op->label == sJge)
+		return jgeCode(quad->polyOne->lit, quad->polyTwo->lit, labCount);
+	if(quad->op->label == sJle)
+		return jleCode(quad->polyOne->lit, quad->polyTwo->lit, labCount);
+	if(quad->op->label == sJg)
+		return jgCode(quad->polyOne->lit, quad->polyTwo->lit, labCount);
+	if(quad->op->label == sJl)
+		return jlCode(quad->polyOne->lit, quad->polyTwo->lit, labCount);
 
 	return "";
 }
@@ -65,6 +82,26 @@ char* writeCode(char* lit)
 		"\tmov edx, ResultEnd\n"
 		"\tint 80h\n",
 		lit);
+
+	return code;
+}
+
+char* elseCode(int* count)
+{
+	int buffer = 32;
+	char *code = malloc(sizeof(char)*buffer);
+	sprintf(code, "\tjmp L%d\nL%d:\tnop",*count+1, *count);
+	++(*count++);
+
+	return code;
+}
+
+char* endifCode(int* count)
+{
+	int buffer = 32;
+	char *code = malloc(sizeof(char)*buffer);
+	sprintf(code, "L%d:\tnop", *count);
+	++(*count++);
 
 	return code;
 }
@@ -149,6 +186,111 @@ char* minusCode(char* polyOne, char* polyTwo, char* result)
 		"\tsub ax, [%s]\n"
 		"\tmov [%s], ax\n",
 		polyOne, polyTwo, result);
+
+	return code;
+}
+
+char* jeCode(char* polyOne, char* polyTwo, int* count)
+{
+	int buffer = 512;
+	char *code = malloc(sizeof(char)*buffer);
+
+	polyOne = NumToLit(polyOne);
+	polyTwo = NumToLit(polyTwo);
+
+	sprintf(code,
+		"\tmov ax, [%s]\n"
+		"\tcmp ax, [%s]\n"
+		"\tje L%d\n"
+		"\tjne L%d\n"
+		"\nL%d:\n",
+		polyOne, polyTwo, *count, *count+1, *count);
+
+	++*count;
+
+	return code;
+}
+
+char* jgeCode(char* polyOne, char* polyTwo, int* count)
+{
+	int buffer = 512;
+	char *code = malloc(sizeof(char)*buffer);
+
+	polyOne = NumToLit(polyOne);
+	polyTwo = NumToLit(polyTwo);
+
+	sprintf(code,
+		"\tmov ax, [%s]\n"
+		"\tcmp ax, [%s]\n"
+		"\tjge L%d\n"
+		"\tjl L%d\n"
+		"\nL%d:\n",
+		polyOne, polyTwo, *count, *count+1, *count);
+
+	++*count;
+
+	return code;
+}
+
+char* jleCode(char* polyOne, char* polyTwo, int* count)
+{
+	int buffer = 512;
+	char *code = malloc(sizeof(char)*buffer);
+
+	polyOne = NumToLit(polyOne);
+	polyTwo = NumToLit(polyTwo);
+
+	sprintf(code,
+		"\tmov ax, [%s]\n"
+		"\tcmp ax, [%s]\n"
+		"\tjle L%d\n"
+		"\tjg L%d\n"
+		"\nL%d:\n",
+		polyOne, polyTwo, *count, *count+1, *count);
+
+	++*count;
+
+	return code;
+}
+
+char* jgCode(char* polyOne, char* polyTwo, int* count)
+{
+	int buffer = 512;
+	char *code = malloc(sizeof(char)*buffer);
+
+	polyOne = NumToLit(polyOne);
+	polyTwo = NumToLit(polyTwo);
+
+	sprintf(code,
+		"\tmov ax, [%s]\n"
+		"\tcmp ax, [%s]\n"
+		"\tjg L%d\n"
+		"\tjle L%d\n"
+		"\nL%d:\n",
+		polyOne, polyTwo, *count, *count+1, *count);
+
+	++*count;
+
+	return code;
+}
+
+char* jlCode(char* polyOne, char* polyTwo, int* count)
+{
+	int buffer = 512;
+	char *code = malloc(sizeof(char)*buffer);
+
+	polyOne = NumToLit(polyOne);
+	polyTwo = NumToLit(polyTwo);
+
+	sprintf(code,
+		"\tmov ax, [%s]\n"
+		"\tcmp ax, [%s]\n"
+		"\tjl L%d\n"
+		"\tjge L%d\n"
+		"\nL%d:\n",
+		polyOne, polyTwo, *count, *count+1, *count);
+
+	++*count;
 
 	return code;
 }

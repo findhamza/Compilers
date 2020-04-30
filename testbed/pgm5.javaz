@@ -1,8 +1,35 @@
 Class pgm5 {
 
-	Const A = 5, B = 3;
+	var A, B;
+
+	Read A;
+	Read B;
+
+	If A < B Then
+		Write A;
+	Else
+		Write B;
+	Endif
 
 	If A > B Then
+		Write A;
+	Else
+		Write B;
+	Endif
+
+	If A <= B Then
+		Write A;
+	Else
+		Write B;
+	Endif
+
+	If A >= B Then
+		Write A;
+	Else
+		Write B;
+	Endif
+
+	If A == B Then
 		Write A;
 	Else
 		Write B;

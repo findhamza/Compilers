@@ -193,6 +193,9 @@ int new_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct N
 
 	if(lab > sIf && lab <=sEndif)
 	{
+		if(is_empty(pds)==false)
+			InToPost(pds, quadNode);
+
 		struct Quads *labQuad = (struct Quads*)calloc(1,sizeof(struct Quads));
 		struct tokenClass *labTok = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 		struct tokenClass *labCounter = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
@@ -273,6 +276,9 @@ int alpha_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct
 
 	if(lab > sIf && lab <=sEndif)
 	{
+		if(is_empty(pds)==false)
+			InToPost(pds, quadNode);
+
 		struct Quads *labQuad = (struct Quads*)calloc(1,sizeof(struct Quads));
 		struct tokenClass *labTok = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 		struct tokenClass *labCounter = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
