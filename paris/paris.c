@@ -3,6 +3,9 @@
 /* Part-1:      Lexical         */
 
 #include "paris.h"
+
+int labelCounter = 0;
+
 /*
 int main()
 {
@@ -188,12 +191,47 @@ int new_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct N
 		push(pds, token, sizeof(struct tokenClass));
 	}
 
+	if(lab > sIf && lab <=sEndif)
+	{
+		struct Quads *labQuad = (struct Quads*)calloc(1,sizeof(struct Quads));
+		struct tokenClass *labTok = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+		struct tokenClass *labCounter = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+
+		labTok->label = lab;
+		sprintf(labTok->lit,"%s", keywords[lab]);
+		labTok->lit[0] = toupper(labTok->lit[0]);
+		labQuad->op = labTok;
+
+		labQuad->polyOne = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+		labQuad->polyTwo = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+
+		labCounter->label = sInt;
+		sprintf(labCounter->lit, "%d", labelCounter);
+		labQuad->result = labCounter;
+		labelCounter++;
+
+		push(quadNode, labQuad, sizeof(struct Quads));
+	}
+
+	if(lab >= sIf && lab <=sEndif)
+		return sUnknown;
+
 	return lab;
 }
 
 int key_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct Node** quadNode)
 {
 		printf("KEY:\t%s\t%d\n", tok, lab);
+
+	(*quad)->op = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+
+	if(lab == sRead || lab == sWrite)
+	{
+		//pleaseEmpty(pds);
+		strncpy((*quad)->op->lit, tok, sizeof(tok));
+		(*quad)->op->label = lab;
+	}
+
 	return lab;
 }
 
@@ -232,7 +270,31 @@ int alpha_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct
 {
 		printf("ALP:\t%s\t%d\n", tok, lab);
 
-	if(lab >= sAssgin && lab <= sMul && is_empty(pds) == false)
+
+	if(lab > sIf && lab <=sEndif)
+	{
+		struct Quads *labQuad = (struct Quads*)calloc(1,sizeof(struct Quads));
+		struct tokenClass *labTok = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+		struct tokenClass *labCounter = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+
+		labTok->label = lab;
+		sprintf(labTok->lit,"%s", keywords[lab]);
+		labTok->lit[0] = toupper(labTok->lit[0]);
+//		sprintf(labTok->lit, "LABEL");
+		labQuad->op = labTok;
+
+		labQuad->polyOne = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+		labQuad->polyTwo = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
+
+		labCounter->label = sInt;
+		sprintf(labCounter->lit, "%d", labelCounter);
+		labQuad->result = labCounter;
+		labelCounter++;
+
+		push(quadNode, labQuad, sizeof(struct Quads));
+	}
+
+	if(lab >= sJl && lab <= sMul && is_empty(pds) == false)
 	{
 		struct tokenClass *token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 		sprintf(token->lit, "%s", tok);
@@ -240,7 +302,7 @@ int alpha_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct
 		push(pds, token, sizeof(struct tokenClass));
 	}
 
-	if(lab == sSemicolon)
+	if(lab == sSemicolon || lab == sThen)
 		InToPost(pds, quadNode);
 
 	return lab;
@@ -249,7 +311,7 @@ int num_prs(char *tok, int lab, struct Quads** quad, struct Node** pds, struct N
 {
 		printf("NUM:\t%s\t%d\n", tok, lab);
 
-	if(lab >= sAssgin && lab <= sMul && is_empty(pds) == false)
+	if(lab >= sJl && lab <= sMul && is_empty(pds) == false)
 	{
 		struct tokenClass *token = (struct tokenClass*)calloc(1,sizeof(struct tokenClass));
 		sprintf(token->lit, "%s", tok);

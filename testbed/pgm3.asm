@@ -3,7 +3,6 @@ global _start
 
 
 section .data
-	lit9	DW	9
 
 
 section .bss
@@ -12,7 +11,6 @@ section .bss
 	ans	RESW	1
 	temp0	RESW	1
 	temp1	RESW	1
-	temp2	RESW	1
 
 
 section .txt
@@ -37,11 +35,6 @@ _start:
 
 
 	mov ax, [temp0]
-	add ax, [lit9]
-	mov [temp1], ax
-
-
-	mov ax, [temp1]
 	mov [ans], ax
 
 

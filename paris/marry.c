@@ -10,7 +10,7 @@ void InToPost(struct Node** pds, struct Node** quadNode)
 	int tempCounter = 0;
 
 	normalize(pds);
-	printf("\n");
+	printf("marry:\n");
 	printLisa(*pds, printToken);
 	printf("\n");
 
@@ -21,7 +21,7 @@ void InToPost(struct Node** pds, struct Node** quadNode)
 		if(token->label == sString || token->label == sInt)
 			push(&outStack, token, sizeof(struct tokenClass));
 
-		else if(token->label >= sAssgin && token->label <= sMul)
+		else if(token->label >= sJl && token->label <= sMul)
 		{
 			if(is_empty(&opStack) == false)
 			{
@@ -81,6 +81,12 @@ void genQuad(int* temp, struct tokenClass* op, struct Node** outStack, struct No
 	{
 		quad->polyOne = (struct tokenClass*)pop(outStack, sizeof(struct tokenClass));
 		quad->result = (struct tokenClass*)pop(outStack, sizeof(struct tokenClass));
+	}
+
+	else if(op->label >= sJl && op->label <= sJe)
+	{
+		quad->polyTwo = (struct tokenClass*)pop(outStack, sizeof(struct tokenClass));
+		quad->polyOne = (struct tokenClass*)pop(outStack, sizeof(struct tokenClass));
 	}
 
 	else

@@ -68,10 +68,16 @@ static struct prsTransition prs_state_transition[] = {
                 {newprs,        sDivi,          opprs},
                 {newprs,        sString,        alphaprs},
                 {newprs,        sInt,           numprs},
-                {newprs,        sUnknown,       endprs},
+                {newprs,        sUnknown,       newprs},
+
+		{newprs,	sIf,		keyprs},
+		{newprs,	sElse,		keyprs},
 
                 {keyprs,        sString,        alphaprs},
                 {keyprs,        sComma,         opprs},
+
+		{keyprs,	sRead,		ioprs},
+		{keyprs,	sWrite,		ioprs},
 
                 {ioprs,         sString,        alphaprs},
 
@@ -87,6 +93,14 @@ static struct prsTransition prs_state_transition[] = {
                 {alphaprs,      sMinus,         opprs},
                 {alphaprs,      sMul,           opprs},
                 {alphaprs,      sDivi,          opprs},
+
+		{alphaprs,	sThen,		newprs},
+
+		{alphaprs,	sJl,		opprs},
+		{alphaprs,	sJg,		opprs},
+		{alphaprs,	sJle,		opprs},
+		{alphaprs,	sJge,		opprs},
+		{alphaprs,	sJe,		opprs},
 
                 {numprs,        sInt,           newprs},
                 {numprs,        sLcb,           newprs},

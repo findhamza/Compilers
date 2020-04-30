@@ -157,8 +157,9 @@ void getNodes(char *prsCode, struct Node** tokenChain,
 		(*quadTok).op->label = getLabel_nancy((*quadTok).op->lit);
 
 		label = (*quadTok).op->label;
+		printf("%s", keywords[label]);
 
-		if(label != sRead && label != sWrite)
+		if(label != sRead && label != sWrite && !(label >= sIf && label <= sEndif))
 		{
 			strcpy((*quadTok).polyOne->lit, strtok(NULL, delimit));
 			(*quadTok).polyOne->label = sString;
@@ -171,8 +172,11 @@ void getNodes(char *prsCode, struct Node** tokenChain,
 		}
 
 //Backup	strcpy((*quadTok).result->lit, strtok(NULL, delimit));
-		sprintf((*quadTok).result->lit, "%s", strtok(NULL, delimit));
-		(*quadTok).result->label = sString;
+		if(!(label >= sJl && label <= sJe))
+		{
+			sprintf((*quadTok).result->lit, "%s", strtok(NULL, delimit));
+			(*quadTok).result->label = sString;
+		}
 
 		push(quadChain, quadTok, sizeof(struct Quads));
 	}
@@ -191,10 +195,28 @@ int getLabel_nancy(char* lit)
 		return sPlus;
 	if(strcmp(lit, "-")==0)
 		return sMinus;
+	if(strcmp(lit, "==")==0)
+		return sJe;
+	if(strcmp(lit, ">=")==0)
+		return sJge;
+	if(strcmp(lit, "<=")==0)
+		return sJle;
+	if(strcmp(lit, ">")==0)
+		return sJg;
+	if(strcmp(lit, "<")==0)
+		return sJle;
 	if(strcmp(lit, "Read")==0)
 		return sRead;
 	if(strcmp(lit, "Write")==0)
 		return sWrite;
+	if(strcmp(lit, "If")==0)
+		return sIf;
+	if(strcmp(lit, "Then")==0)
+		return sThen;
+	if(strcmp(lit, "Else")==0)
+		return sElse;
+	if(strcmp(lit, "Endif")==0)
+		return sEndif;
 
 	return sUnknown;
 }
