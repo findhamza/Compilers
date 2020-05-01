@@ -1,0 +1,386 @@
+Please Enter Program Name Without Extension:
+
+Atom: C ; O'State; entry ; Ret: alpha ; State: letter
+Atom: l ; O'State; letter ; Ret: alpha ; State: letter
+Atom: a ; O'State; letter ; Ret: alpha ; State: letter
+Atom: s ; O'State; letter ; Ret: alpha ; State: letter
+Atom: s ; O'State; letter ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: Class	~CLASS
+
+Atom: P ; O'State; token ; Ret: alpha ; State: letter
+Atom: g ; O'State; letter ; Ret: alpha ; State: letter
+Atom: m ; O'State; letter ; Ret: alpha ; State: letter
+Atom: E ; O'State; letter ; Ret: alpha ; State: letter
+Atom: x ; O'State; letter ; Ret: alpha ; State: letter
+Atom: 1 ; O'State; letter ; Ret: num ; State: letter
+Atom: N ; O'State; letter ; Ret: alpha ; State: letter
+Atom: a ; O'State; letter ; Ret: alpha ; State: letter
+Atom: s ; O'State; letter ; Ret: alpha ; State: letter
+Atom: m ; O'State; letter ; Ret: alpha ; State: letter
+Atom: 3 ; O'State; letter ; Ret: num ; State: letter
+Atom: 2 ; O'State; letter ; Ret: num ; State: letter
+Atom: L ; O'State; letter ; Ret: alpha ; State: letter
+Atom: i ; O'State; letter ; Ret: alpha ; State: letter
+Atom: n ; O'State; letter ; Ret: alpha ; State: letter
+Atom: u ; O'State; letter ; Ret: alpha ; State: letter
+Atom: x ; O'State; letter ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: PgmEx1Nasm32Linux	$string
+
+Atom: { ; O'State; token ; Ret: lcb ; State: entry
+Atom: 
+ ; O'State; entry ; Ret: space ; State: symbol
+Atom: 	 ; O'State; symbol ; Ret: space ; State: token
+Token: {	>lcb
+
+Atom: C ; O'State; token ; Ret: alpha ; State: letter
+Atom: o ; O'State; letter ; Ret: alpha ; State: letter
+Atom: n ; O'State; letter ; Ret: alpha ; State: letter
+Atom: s ; O'State; letter ; Ret: alpha ; State: letter
+Atom: t ; O'State; letter ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: Const	~CONST
+
+Atom: M ; O'State; token ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: M	$string
+
+Atom: = ; O'State; token ; Ret: assign ; State: symbol
+Atom:   ; O'State; symbol ; Ret: space ; State: token
+Token: =	>assign
+
+Atom: 7 ; O'State; token ; Ret: num ; State: digit
+Atom: , ; O'State; digit ; Ret: comma ; State: token
+Token: 7	$int
+
+Atom:   ; O'State; token ; Ret: space ; State: entry
+Token: ,	>comma
+
+Atom: N ; O'State; entry ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: N	$string
+
+Atom: = ; O'State; token ; Ret: assign ; State: symbol
+Atom:   ; O'State; symbol ; Ret: space ; State: token
+Token: =	>assign
+
+Atom: 8 ; O'State; token ; Ret: num ; State: digit
+Atom: 5 ; O'State; digit ; Ret: num ; State: digit
+Atom: ; ; O'State; digit ; Ret: semicolon ; State: token
+Token: 85	$int
+
+Atom: 
+ ; O'State; token ; Ret: space ; State: entry
+Token: ;	>semicolon
+
+Atom: 	 ; O'State; entry ; Ret: space ; State: symbol
+Atom: V ; O'State; symbol ; Ret: alpha ; State: letter
+Atom: a ; O'State; letter ; Ret: alpha ; State: letter
+Atom: r ; O'State; letter ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: Var	~VAR
+
+Atom: X ; O'State; token ; Ret: alpha ; State: letter
+Atom: , ; O'State; letter ; Ret: comma ; State: token
+Token: X	$string
+
+Atom:   ; O'State; token ; Ret: space ; State: entry
+Token: ,	>comma
+
+Atom: Y ; O'State; entry ; Ret: alpha ; State: letter
+Atom: , ; O'State; letter ; Ret: comma ; State: token
+Token: Y	$string
+
+Atom:   ; O'State; token ; Ret: space ; State: entry
+Token: ,	>comma
+
+Atom: Z ; O'State; entry ; Ret: alpha ; State: letter
+Atom: ; ; O'State; letter ; Ret: semicolon ; State: token
+Token: Z	$string
+
+Atom: 
+ ; O'State; token ; Ret: space ; State: entry
+Token: ;	>semicolon
+
+Atom: 	 ; O'State; entry ; Ret: space ; State: symbol
+Atom: R ; O'State; symbol ; Ret: alpha ; State: letter
+Atom: e ; O'State; letter ; Ret: alpha ; State: letter
+Atom: a ; O'State; letter ; Ret: alpha ; State: letter
+Atom: d ; O'State; letter ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: Read	~READ
+
+Atom: Y ; O'State; token ; Ret: alpha ; State: letter
+Atom: ; ; O'State; letter ; Ret: semicolon ; State: token
+Token: Y	$string
+
+Atom: 
+ ; O'State; token ; Ret: space ; State: entry
+Token: ;	>semicolon
+
+Atom: 	 ; O'State; entry ; Ret: space ; State: symbol
+Atom: R ; O'State; symbol ; Ret: alpha ; State: letter
+Atom: e ; O'State; letter ; Ret: alpha ; State: letter
+Atom: a ; O'State; letter ; Ret: alpha ; State: letter
+Atom: d ; O'State; letter ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: Read	~READ
+
+Atom: Z ; O'State; token ; Ret: alpha ; State: letter
+Atom: ; ; O'State; letter ; Ret: semicolon ; State: token
+Token: Z	$string
+
+Atom: 
+ ; O'State; token ; Ret: space ; State: entry
+Token: ;	>semicolon
+
+Atom: 	 ; O'State; entry ; Ret: space ; State: symbol
+Atom: X ; O'State; symbol ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: X	$string
+
+Atom: = ; O'State; token ; Ret: assign ; State: symbol
+Atom:   ; O'State; symbol ; Ret: space ; State: token
+Token: =	>assign
+
+Atom: M ; O'State; token ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: M	$string
+
+Atom: + ; O'State; token ; Ret: plus ; State: symbol
+Atom:   ; O'State; symbol ; Ret: space ; State: token
+Token: +	>plus
+
+Atom: Y ; O'State; token ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: Y	$string
+
+Atom: * ; O'State; token ; Ret: mul ; State: symbol
+Atom:   ; O'State; symbol ; Ret: space ; State: token
+Token: *	>mul
+
+Atom: Z ; O'State; token ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: Z	$string
+
+Atom: + ; O'State; token ; Ret: plus ; State: symbol
+Atom:   ; O'State; symbol ; Ret: space ; State: token
+Token: +	>plus
+
+Atom: 1 ; O'State; token ; Ret: num ; State: digit
+Atom: 2 ; O'State; digit ; Ret: num ; State: digit
+Atom: ; ; O'State; digit ; Ret: semicolon ; State: token
+Token: 12	$int
+
+Atom: 
+ ; O'State; token ; Ret: space ; State: entry
+Token: ;	>semicolon
+
+Atom: 	 ; O'State; entry ; Ret: space ; State: symbol
+Atom: W ; O'State; symbol ; Ret: alpha ; State: letter
+Atom: r ; O'State; letter ; Ret: alpha ; State: letter
+Atom: i ; O'State; letter ; Ret: alpha ; State: letter
+Atom: t ; O'State; letter ; Ret: alpha ; State: letter
+Atom: e ; O'State; letter ; Ret: alpha ; State: letter
+Atom:   ; O'State; letter ; Ret: space ; State: token
+Token: Write	~WRITE
+
+Atom: X ; O'State; token ; Ret: alpha ; State: letter
+Atom: ; ; O'State; letter ; Ret: semicolon ; State: token
+Token: X	$string
+
+Atom: 
+ ; O'State; token ; Ret: space ; State: entry
+Token: ;	>semicolon
+
+Atom: } ; O'State; entry ; Ret: rcb ; State: symbol
+Atom: 
+ ; O'State; symbol ; Ret: space ; State: token
+Token: }	>rcb
+lit: PgmEx1Nasm32Linux	lab: 0	val: 0	adrs: 0	CS
+lit:            M	lab: 1	val: 7	adrs: 0	DS
+lit:            N	lab: 1	val: 85	adrs: 0	DS
+lit:            X	lab: 2	val: 0	adrs: 0	DS
+lit:            Y	lab: 2	val: 0	adrs: 0	DS
+lit:            Z	lab: 2	val: 0	adrs: 0	DS
+lit:        lit12	lab: 1	val: 12	adrs: 0	DS
+
+
+Class	0
+PgmEx1Nasm32Linux	23
+{	9
+Const	1
+M	23
+=	18
+7	24
+,	11
+N	23
+=	18
+85	24
+;	12
+Var	2
+X	23
+,	11
+Y	23
+,	11
+Z	23
+;	12
+Read	3
+Y	23
+;	12
+Read	3
+Z	23
+;	12
+X	23
+=	18
+M	23
++	20
+Y	23
+*	22
+Z	23
++	20
+12	24
+;	12
+Write	4
+X	23
+;	12
+}	10
+lit: PgmEx1Nasm32Linux	lab: 0	val: 0	adrs: 0	CS
+lit:            M	lab: 1	val: 7	adrs: 0	DS
+lit:            N	lab: 1	val: 85	adrs: 1	DS
+lit:            X	lab: 2	val: 0	adrs: 2	DS
+lit:            Y	lab: 2	val: 0	adrs: 3	DS
+lit:            Z	lab: 2	val: 0	adrs: 4	DS
+lit:        lit12	lab: 1	val: 12	adrs: 5	DS
+lit:        temp0	lab: 2	val: 0	adrs: 6	DS
+lit:        temp1	lab: 2	val: 0	adrs: 7	DS
+lit:        temp2	lab: 2	val: 0	adrs: 8	DS
+lit:        temp3	lab: 2	val: 0	adrs: 9	DS
+Class PgmEx1Nasm32Linux {
+	Const M = 7, N = 85;
+	Var X, Y, Z;
+	Read Y;
+	Read Z;
+	X = M + Y * Z + 12;
+	Write X;
+}
+HELLO
+NEW:	Class	0
+KEY:	PgmEx1Nasm32Linux	23
+ALP:	{	9
+NEW:	Const	1
+KEY:	M	23
+ALP:	=	18
+EMPTY LIST
+OP:	7	24
+EMPTY LIST
+NUM:	,	11
+KEY:	N	23
+ALP:	=	18
+EMPTY LIST
+OP:	85	24
+EMPTY LIST
+NUM:	;	12
+marry:
+
+EMPTY LIST
+
+
+EMPTY LIST
+NEW:	Var	2
+KEY:	X	23
+ALP:	,	11
+KEY:	Y	23
+ALP:	,	11
+KEY:	Z	23
+ALP:	;	12
+marry:
+
+EMPTY LIST
+
+
+EMPTY LIST
+NEW:	Read	3
+IO:	Y	23
+ALP:	;	12
+marry:
+
+EMPTY LIST
+
+
+EMPTY LIST
+NEW:	Read	3
+IO:	Z	23
+ALP:	;	12
+marry:
+
+EMPTY LIST
+
+
+EMPTY LIST
+NEW:	X	23
+ALP:	=	18
+OP:	M	23
+ALP:	+	20
+OP:	Y	23
+ALP:	*	22
+OP:	Z	23
+ALP:	+	20
+OP:	12	24
+NUM:	;	12
+marry:
+X	23
+=	18
+M	23
++	20
+Y	23
+*	22
+Z	23
++	20
+12	24
+
+EMPTY LIST
+EMPTY LIST
+
++	20
++	20
+=	18
+
+EMPTY LIST
+NEW:	Write	4
+IO:	X	23
+ALP:	;	12
+marry:
+
+EMPTY LIST
+
+
+EMPTY LIST
+NEW:	}	10
+Write			X
+=	temp2		X
++	M	temp1	temp2
++	temp0	12	temp1
+*	Y	Z	temp0
+Read			Z
+Read			Y
+readread*++=writelit: PgmEx1Nasm32Linux	lab: 0	val: 0	adrs: 0	CS
+lit:            M	lab: 1	val: 7	adrs: 0	DS
+lit:            N	lab: 1	val: 85	adrs: 1	DS
+lit:            X	lab: 2	val: 0	adrs: 2	DS
+lit:            Y	lab: 2	val: 0	adrs: 3	DS
+lit:            Z	lab: 2	val: 0	adrs: 4	DS
+lit:        lit12	lab: 1	val: 12	adrs: 5	DS
+lit:        temp0	lab: 2	val: 0	adrs: 6	DS
+lit:        temp1	lab: 2	val: 0	adrs: 7	DS
+lit:        temp2	lab: 2	val: 0	adrs: 8	DS
+lit:        temp3	lab: 2	val: 0	adrs: 9	DS
+HELLO Y
+HELLO Z
+HELLO temp0
+HELLO 12
+HELLO lit12
+HELLO M
+HELLO temp1
+HELLO temp2
